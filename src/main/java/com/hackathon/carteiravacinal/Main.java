@@ -1,21 +1,25 @@
 package com.hackathon.carteiravacinal;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import com.hackathon.carteiravacinal.config.DatabaseConfig;
+import com.hackathon.carteiravacinal.api.PacienteApi;
+import com.hackathon.carteiravacinal.repository.PacienteRepository;
+import com.hackathon.carteiravacinal.service.PacienteService;
+import com.hackathon.carteiravacinal.config.RouteConfig;
+import spark.Spark;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Iniciando CarteiraVacinal Backend...");
 
-        try (Connection conn = DatabaseConfig.getConnection()) {
-            if (conn != null) {
-                System.out.println("Conectado ao banco de dados com sucesso!");
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao conectar ao banco: " + e.getMessage());
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        int porta = 3000;
+
+        Spark.port(porta);
+
+        PacienteRepository pacienteRepository = new PacienteRepository();
+        PacienteService pacienteService = new PacienteService(pacienteRepository);
+
+        PacienteApi pacienteApi = new PacienteApi(pacienteService);
+
+        RouteConfig.configurarRotas(pacienteApi);
+
+        System.out.printf("Servidor rodando na porta %d...\n", porta);
     }
 }

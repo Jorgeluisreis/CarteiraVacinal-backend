@@ -1,8 +1,10 @@
 package com.hackathon.carteiravacinal.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
@@ -14,10 +16,18 @@ public class DatabaseConfig {
     private static final String USER = dotenv.get("DB_USER");
     private static final String PASSWORD = dotenv.get("DB_PASSWORD");
 
-    private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE
-            + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static HikariDataSource dataSource;
+
+    static {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE
+                + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
+        config.setUsername(USER);
+        config.setPassword(PASSWORD);
+        dataSource = new HikariDataSource(config);
+    }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return dataSource.getConnection();
     }
 }

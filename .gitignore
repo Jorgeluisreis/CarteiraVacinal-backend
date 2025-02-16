@@ -1,6 +1,7 @@
 # Projeto
 *.yaml
 *.env
+*.class
 
 # Maven target directory
 /target/
