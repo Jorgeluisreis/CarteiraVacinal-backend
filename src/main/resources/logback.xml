@@ -1,0 +1,15 @@
+<configuration>
+    <root level="INFO">
+        <appender-ref ref="Console" />
+    </root>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %level - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="spark" level="INFO" />
+    <logger name="org.eclipse.jetty" level="INFO" />
+
+</configuration>
