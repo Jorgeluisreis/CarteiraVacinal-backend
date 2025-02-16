@@ -19,4 +19,24 @@ public class PacienteService {
             throw new ApiException("Falha ao inserir paciente no banco de dados.");
         }
     }
+
+    public boolean alterarPaciente(Long idPaciente, Paciente paciente) throws ApiException {
+        try {
+            return pacienteRepository.alterarPaciente(idPaciente, paciente);
+        } catch (Exception e) {
+            throw new ApiException("Falha ao alterar o paciente.");
+        }
+    }
+
+    public Paciente buscarPacientePorId(Long id) throws ApiException {
+        try {
+            return pacienteRepository.buscarPacientePorId(id);
+        } catch (Exception e) {
+            throw new ApiException("Falha ao buscar paciente no banco de dados.");
+        }
+    }
+
+    public boolean verificarIdPaciente(Long idPacienteRequisitado, Long idPacienteAlterado) {
+        return idPacienteRequisitado.equals(idPacienteAlterado);
+    }
 }

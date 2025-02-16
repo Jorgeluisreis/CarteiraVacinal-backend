@@ -1,6 +1,7 @@
 package com.hackathon.carteiravacinal.api;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +29,16 @@ public class PacienteApi {
     public Route adicionarPaciente = (Request req, Response res) -> {
         try {
             Paciente paciente = gson.fromJson(req.body(), Paciente.class);
+
+            if (paciente.getDataNascimento() != null) {
+                String dataNascimentoStr = paciente.getDataNascimento()
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+                if (!isValidDateFormat(dataNascimentoStr)) {
+                    res.status(400);
+                    return "Erro no formato de data: a data deve ser no formato dd-MM-yyyy.";
+                }
+            }
 
             if (paciente.getSexo() == null) {
                 res.status(400);
@@ -57,4 +68,77 @@ public class PacienteApi {
             return "Erro no formato de data: " + e.getMessage();
         }
     };
+
+    public Route alterarPaciente = (Request req, Response res) -> {
+        try {
+            Long idPacienteRequisitado = Long.parseLong(req.params(":id"));
+            Paciente pacienteRequisitado = pacienteService.buscarPacientePorId(idPacienteRequisitado);
+
+            if (pacienteRequisitado == null) {
+                res.status(404);
+                return "Paciente não encontrado.";
+            }
+
+            Paciente paciente = gson.fromJson(req.body(), Paciente.class);
+
+            if (isPacienteIgual(pacienteRequisitado, paciente)) {
+                res.status(400);
+                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+            }
+
+            Paciente pacienteAlterado = pacienteRequisitado;
+            boolean dadosAlterados = false;
+
+            if (!paciente.getNome().equals(pacienteRequisitado.getNome())) {
+                pacienteAlterado.setNome(paciente.getNome());
+                dadosAlterados = true;
+            }
+            if (!paciente.getCpf().equals(pacienteRequisitado.getCpf())) {
+                pacienteAlterado.setCpf(paciente.getCpf());
+                dadosAlterados = true;
+            }
+            if (!paciente.getSexo().equals(pacienteRequisitado.getSexo())) {
+                pacienteAlterado.setSexo(paciente.getSexo());
+                dadosAlterados = true;
+            }
+            if (!paciente.getDataNascimento().equals(pacienteRequisitado.getDataNascimento())) {
+                pacienteAlterado.setDataNascimento(paciente.getDataNascimento());
+                dadosAlterados = true;
+            }
+
+            if (dadosAlterados) {
+                boolean atualizado = pacienteService.alterarPaciente(idPacienteRequisitado, pacienteAlterado);
+                if (atualizado) {
+                    res.status(200);
+                    return "Paciente atualizado com sucesso!";
+                } else {
+                    res.status(404);
+                    return "Erro ao atualizar paciente.";
+                }
+            } else {
+                res.status(400);
+                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+            }
+        } catch (ApiException e) {
+            res.status(400);
+            return "Erro ao alterar paciente: " + e.getMessage();
+        } catch (IllegalArgumentException e) {
+            res.status(400);
+            return "Erro no formato de dados: " + e.getMessage();
+        }
+    };
+
+    private boolean isPacienteIgual(Paciente pacienteBanco, Paciente pacienteBody) {
+        return pacienteBanco.getNome().equals(pacienteBody.getNome()) &&
+                pacienteBanco.getCpf().equals(pacienteBody.getCpf()) &&
+                pacienteBanco.getSexo().equals(pacienteBody.getSexo()) &&
+                pacienteBanco.getDataNascimento().equals(pacienteBody.getDataNascimento());
+    }
+
+    private boolean isValidDateFormat(String data) {
+        if (!data.matches("^\\d{2}-\\d{2}-\\d{4}$")) {
+            return false;
+        }
+        return true;
+    }
 }
