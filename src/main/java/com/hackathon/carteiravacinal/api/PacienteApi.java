@@ -34,14 +34,27 @@ public class PacienteApi {
                 return "Sexo inválido. Escolha entre 'M' ou 'F'.";
             }
 
+            if (paciente.getNome() == null || paciente.getNome().isEmpty()) {
+                res.status(400);
+                return "Nome inválido. O nome não pode ser vazio.";
+            }
+
+            if (paciente.getCpf() != null
+                    && (paciente.getCpf().length() != 11 || !paciente.getCpf().matches("\\d{11}"))) {
+                res.status(400);
+                return "CPF inválido. O CPF deve ter 11 dígitos numéricos.";
+            }
+
             Long idPaciente = pacienteService.adicionarPaciente(paciente);
 
             res.status(201);
-
             return "Paciente inserido com sucesso! ID: " + idPaciente;
         } catch (ApiException e) {
             res.status(400);
             return "Erro ao adicionar paciente: " + e.getMessage();
+        } catch (IllegalArgumentException e) {
+            res.status(400);
+            return "Erro no formato de data: " + e.getMessage();
         }
     };
 }
