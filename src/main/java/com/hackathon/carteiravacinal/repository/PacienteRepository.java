@@ -55,7 +55,7 @@ public class PacienteRepository {
         }
     }
 
-    public Paciente buscarPacientePorId(Long id) throws SQLException, ApiException {
+    public Paciente buscarPacientePorId(Long id) throws ApiException {
         String query = "SELECT * FROM paciente WHERE id = ?";
         try (Connection conn = DatabaseConfig.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -74,6 +74,21 @@ public class PacienteRepository {
             } else {
                 throw new ApiException("Paciente não encontrado com o ID fornecido.");
             }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para buscar o paciente: " + e.getMessage(), e);
+        }
+    }
+
+    public boolean excluirPaciente(Long idPaciente) throws SQLException, ApiException {
+        String query = "DELETE FROM paciente WHERE id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idPaciente);
+
+            int affectedRows = stmt.executeUpdate();
+
+            return affectedRows > 0;
         }
     }
 

@@ -128,6 +128,34 @@ public class PacienteApi {
         }
     };
 
+    public Route excluirPaciente = (Request req, Response res) -> {
+        try {
+            Long idPacienteRequisitado = Long.parseLong(req.params(":id"));
+
+            pacienteService.buscarPacientePorId(idPacienteRequisitado);
+
+            boolean excluido = pacienteService.excluirPaciente(idPacienteRequisitado);
+
+            if (excluido) {
+                res.status(200);
+                return "Paciente excluído com sucesso!";
+            } else {
+                res.status(400);
+                return "Erro ao excluir paciente.";
+            }
+        } catch (ApiException e) {
+            if (e.getMessage().equals("Paciente não encontrado com o ID fornecido.")) {
+                res.status(404);
+                return e.getMessage();
+            }
+            res.status(400);
+            return "Erro ao excluir paciente: " + e.getMessage();
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "Erro no formato do ID.";
+        }
+    };
+
     private boolean isPacienteIgual(Paciente pacienteBanco, Paciente pacienteBody) {
         return pacienteBanco.getNome().equals(pacienteBody.getNome()) &&
                 pacienteBanco.getCpf().equals(pacienteBody.getCpf()) &&
