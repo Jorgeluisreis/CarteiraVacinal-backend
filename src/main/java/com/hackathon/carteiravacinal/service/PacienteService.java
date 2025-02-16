@@ -31,12 +31,27 @@ public class PacienteService {
     public Paciente buscarPacientePorId(Long id) throws ApiException {
         try {
             return pacienteRepository.buscarPacientePorId(id);
+        } catch (ApiException e) {
+            throw e;
         } catch (Exception e) {
-            throw new ApiException("Falha ao buscar paciente no banco de dados.");
+            throw new ApiException("Erro inesperado ao buscar paciente.", e);
         }
     }
 
     public boolean verificarIdPaciente(Long idPacienteRequisitado, Long idPacienteAlterado) {
         return idPacienteRequisitado.equals(idPacienteAlterado);
     }
+
+    public boolean excluirPaciente(Long idPaciente) throws ApiException {
+        try {
+            Paciente paciente = pacienteRepository.buscarPacientePorId(idPaciente);
+            if (paciente == null) {
+                throw new ApiException("Paciente não encontrado com o ID fornecido.");
+            }
+            return pacienteRepository.excluirPaciente(idPaciente);
+        } catch (Exception e) {
+            throw new ApiException("Falha ao excluir o paciente.");
+        }
+    }
+
 }

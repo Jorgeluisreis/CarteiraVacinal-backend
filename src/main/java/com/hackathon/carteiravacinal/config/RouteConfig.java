@@ -8,5 +8,6 @@ public class RouteConfig {
     public static void configurarRotas(PacienteApi pacienteApi) {
         Spark.post("/paciente/inserir", pacienteApi.adicionarPaciente);
         Spark.put("/paciente/alterar/:id", pacienteApi.alterarPaciente);
+        Spark.delete("/paciente/excluir/:id", pacienteApi.excluirPaciente);
     }
 }
