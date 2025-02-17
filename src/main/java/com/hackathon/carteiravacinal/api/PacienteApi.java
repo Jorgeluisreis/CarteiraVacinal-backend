@@ -2,6 +2,7 @@ package com.hackathon.carteiravacinal.api;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,7 +15,6 @@ import spark.Route;
 import com.hackathon.carteiravacinal.util.LocalDateAdapter;
 
 public class PacienteApi {
-
     private PacienteService pacienteService;
     private Gson gson;
 
@@ -153,6 +153,38 @@ public class PacienteApi {
         } catch (NumberFormatException e) {
             res.status(400);
             return "Erro no formato do ID.";
+        }
+    };
+
+    public Route consultarTodosPacientes = (Request req, Response res) -> {
+        try {
+            List<Paciente> pacientes = pacienteService.consultarTodosPacientes();
+            res.status(200);
+            return gson.toJson(pacientes);
+        } catch (ApiException e) {
+            res.status(400);
+            return "Erro ao listar pacientes: " + e.getMessage();
+        }
+    };
+
+    public Route consultarPacientePorId = (Request req, Response res) -> {
+        try {
+            Long idPaciente = Long.parseLong(req.params(":id"));
+            Paciente paciente = pacienteService.buscarPacientePorId(idPaciente);
+
+            if (paciente == null) {
+                res.status(404);
+                return "Paciente não encontrado.";
+            }
+
+            res.status(200);
+            return gson.toJson(paciente);
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "ID inválido. O ID deve ser um número.";
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao consultar paciente: " + e.getMessage();
         }
     };
 

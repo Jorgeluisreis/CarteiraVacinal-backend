@@ -9,5 +9,7 @@ public class RouteConfig {
         Spark.post("/paciente/inserir", pacienteApi.adicionarPaciente);
         Spark.put("/paciente/alterar/:id", pacienteApi.alterarPaciente);
         Spark.delete("/paciente/excluir/:id", pacienteApi.excluirPaciente);
+        Spark.get("/paciente/consultar", pacienteApi.consultarTodosPacientes);
+        Spark.get("/paciente/consultar/:id", pacienteApi.consultarPacientePorId);
     }
 }

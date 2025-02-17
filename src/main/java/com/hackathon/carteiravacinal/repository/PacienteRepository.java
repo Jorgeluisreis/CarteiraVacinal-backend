@@ -6,7 +6,10 @@ import com.hackathon.carteiravacinal.exceptions.ApiException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacienteRepository {
 
@@ -90,6 +93,30 @@ public class PacienteRepository {
 
             return affectedRows > 0;
         }
+    }
+
+    public List<Paciente> consultarTodosPacientes() throws ApiException {
+        String query = "SELECT * FROM paciente";
+        List<Paciente> pacientes = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery()) {
+
+            while (resultSet.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(resultSet.getLong("id"));
+                paciente.setNome(resultSet.getString("nome"));
+                paciente.setCpf(resultSet.getString("cpf"));
+                paciente.setSexo(Paciente.Sexo.valueOf(resultSet.getString("sexo")));
+                paciente.setDataNascimento(resultSet.getDate("data_nascimento").toLocalDate());
+                pacientes.add(paciente);
+            }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para listar os pacientes: " + e.getMessage(), e);
+        }
+
+        return pacientes;
     }
 
     private void validarPaciente(Paciente paciente) throws ApiException {
