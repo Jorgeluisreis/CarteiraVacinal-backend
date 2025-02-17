@@ -15,5 +15,6 @@ public class RouteConfig {
         Spark.post("/imunizacao/inserir", imunizacaoApi.adicionarImunizacao);
         Spark.put("/imunizacao/alterar/:id", imunizacaoApi.alterarImunizacao);
         Spark.delete("/imunizacao/excluir/:id", imunizacaoApi.excluirImunizacao);
+        Spark.delete("/imunizacao/excluir/paciente/:id", imunizacaoApi.excluirTodasImunizacoesPaciente);
     }
 }

@@ -2,8 +2,9 @@ package com.hackathon.carteiravacinal.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.hackathon.carteiravacinal.model.Imunizacoes;
+import com.hackathon.carteiravacinal.model.*;
 import com.hackathon.carteiravacinal.service.ImunizacaoService;
+import com.hackathon.carteiravacinal.service.PacienteService;
 import com.hackathon.carteiravacinal.util.GsonUtil;
 import com.hackathon.carteiravacinal.exceptions.ApiException;
 import spark.Request;
@@ -13,10 +14,12 @@ import spark.Route;
 public class ImunizacaoApi {
 
     private ImunizacaoService imunizacaoService;
+    private PacienteService pacienteService;
     private Gson gson;
 
-    public ImunizacaoApi(ImunizacaoService imunizacaoService) {
+    public ImunizacaoApi(ImunizacaoService imunizacaoService, PacienteService pacienteService) {
         this.imunizacaoService = imunizacaoService;
+        this.pacienteService = pacienteService;
         this.gson = GsonUtil.getGson();
     }
 
@@ -138,6 +141,34 @@ public class ImunizacaoApi {
             }
             res.status(400);
             return "Erro ao excluir Imunização: " + e.getMessage();
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "Erro no formato do ID.";
+        }
+    };
+
+    public Route excluirTodasImunizacoesPaciente = (Request req, Response res) -> {
+        try {
+            Long idPacienteRequisitado = Long.parseLong(req.params(":id"));
+
+            pacienteService.buscarPacientePorId(idPacienteRequisitado);
+
+            boolean excluido = imunizacaoService.excluirTodasImunizacoesPaciente(idPacienteRequisitado);
+
+            if (excluido) {
+                res.status(200);
+                return "Todas as imunizações do paciente foram excluída com sucesso!";
+            } else {
+                res.status(400);
+                return "Erro ao excluir as Imunizações.";
+            }
+        } catch (ApiException e) {
+            if (e.getMessage().equals("Imunização não encontrada com o ID fornecido.")) {
+                res.status(404);
+                return e.getMessage();
+            }
+            res.status(400);
+            return "Erro ao excluir as Imunizações: " + e.getMessage();
         } catch (NumberFormatException e) {
             res.status(400);
             return "Erro no formato do ID.";

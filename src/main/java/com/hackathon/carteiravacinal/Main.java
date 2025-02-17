@@ -24,7 +24,7 @@ public class Main {
         // Imunizacoes
         ImunizacaoRepository imunizacaoRepository = new ImunizacaoRepository();
         ImunizacaoService imunizacaoService = new ImunizacaoService(imunizacaoRepository, pacienteRepository);
-        ImunizacaoApi imunizacaoApi = new ImunizacaoApi(imunizacaoService);
+        ImunizacaoApi imunizacaoApi = new ImunizacaoApi(imunizacaoService, pacienteService);
 
         RouteConfig.configurarRotas(pacienteApi, imunizacaoApi);
 

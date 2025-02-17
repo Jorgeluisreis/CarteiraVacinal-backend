@@ -107,4 +107,17 @@ public class ImunizacaoRepository {
             return affectedRows > 0;
         }
     }
+
+    public boolean excluirTodasImunizacoesPaciente(Long idPaciente) throws SQLException, ApiException {
+        String query = "DELETE FROM imunizacoes WHERE id_paciente = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idPaciente);
+
+            int affectedRows = stmt.executeUpdate();
+
+            return affectedRows > 0;
+        }
+    }
 }
