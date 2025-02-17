@@ -34,10 +34,8 @@ public class PacienteService {
     public Paciente buscarPacientePorId(Long id) throws ApiException {
         try {
             return pacienteRepository.buscarPacientePorId(id);
-        } catch (ApiException e) {
-            throw e;
         } catch (Exception e) {
-            throw new ApiException("Erro inesperado ao buscar paciente.", e);
+            throw new ApiException("Paciente não encontrado.");
         }
     }
 
@@ -60,5 +58,4 @@ public class PacienteService {
     public List<Paciente> consultarTodosPacientes() throws ApiException {
         return pacienteRepository.consultarTodosPacientes();
     }
-
 }
