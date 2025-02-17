@@ -55,4 +55,17 @@ public class ImunizacaoService {
             throw new ApiException("Falha ao excluir a Imunização.");
         }
     }
+
+    public boolean excluirTodasImunizacoesPaciente(Long idPaciente) throws ApiException {
+        try {
+            Paciente paciente = pacienteRepository.buscarPacientePorId(idPaciente);
+
+            if (paciente == null) {
+                throw new ApiException("Paciente não encontrado com o ID fornecido.");
+            }
+            return imunizacaoRepository.excluirTodasImunizacoesPaciente(idPaciente);
+        } catch (Exception e) {
+            throw new ApiException("Falha ao excluir a Imunização.");
+        }
+    }
 }
