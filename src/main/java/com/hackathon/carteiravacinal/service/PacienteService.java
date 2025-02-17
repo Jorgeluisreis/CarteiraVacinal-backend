@@ -2,6 +2,9 @@ package com.hackathon.carteiravacinal.service;
 
 import com.hackathon.carteiravacinal.model.Paciente;
 import com.hackathon.carteiravacinal.repository.PacienteRepository;
+
+import java.util.List;
+
 import com.hackathon.carteiravacinal.exceptions.ApiException;
 
 public class PacienteService {
@@ -52,6 +55,10 @@ public class PacienteService {
         } catch (Exception e) {
             throw new ApiException("Falha ao excluir o paciente.");
         }
+    }
+
+    public List<Paciente> consultarTodosPacientes() throws ApiException {
+        return pacienteRepository.consultarTodosPacientes();
     }
 
 }
