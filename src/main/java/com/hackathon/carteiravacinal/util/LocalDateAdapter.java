@@ -1,25 +1,30 @@
 package com.hackathon.carteiravacinal.util;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import java.lang.reflect.Type;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class LocalDateAdapter implements JsonDeserializer<LocalDate> {
+public class LocalDateAdapter extends TypeAdapter<LocalDate> {
 
-    // Formato: dd-MM-yyyy
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @Override
-    public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-        String date = json.getAsString();
+    public void write(JsonWriter out, LocalDate value) throws IOException {
+        out.value(value.format(formatter));
+    }
+
+    @Override
+    public LocalDate read(JsonReader in) throws IOException {
+        String date = in.nextString();
         try {
             return LocalDate.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Data inválida. O formato correto é dd-MM-yyyy.");
+            throw new IOException("Data inválida. O formato correto é dd-MM-yyyy.");
         }
     }
 }
