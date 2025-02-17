@@ -121,7 +121,7 @@ public class PacienteApi {
             }
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao alterar paciente: " + e.getMessage();
+            return e.getMessage();
         } catch (IllegalArgumentException e) {
             res.status(400);
             return "Erro no formato de dados: " + e.getMessage();
