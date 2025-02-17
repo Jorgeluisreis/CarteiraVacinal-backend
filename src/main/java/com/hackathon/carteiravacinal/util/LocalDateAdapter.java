@@ -1,5 +1,6 @@
 package com.hackathon.carteiravacinal.util;
 
+import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -24,7 +25,7 @@ public class LocalDateAdapter extends TypeAdapter<LocalDate> {
         try {
             return LocalDate.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            throw new IOException("Data inválida. O formato correto é dd-MM-yyyy.");
+            throw new JsonParseException("Data inválida. O formato correto é dd-MM-yyyy.", e);
         }
     }
 }
