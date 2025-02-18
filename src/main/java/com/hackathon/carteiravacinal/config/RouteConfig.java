@@ -18,5 +18,6 @@ public class RouteConfig {
         Spark.delete("/imunizacao/excluir/paciente/:id", imunizacaoApi.excluirTodasImunizacoesPaciente);
         Spark.get("/imunizacao/consultar", imunizacaoApi.consultarTodasImunizacoes);
         Spark.get("/imunizacao/consultar/:id", imunizacaoApi.consultarImunizacaoPorIdImunizacao);
+        Spark.get("/imunizacao/consultar/paciente/:id", imunizacaoApi.consultarImunizacaoPorIdPaciente);
     }
 }

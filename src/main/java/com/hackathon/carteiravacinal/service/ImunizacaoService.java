@@ -81,4 +81,12 @@ public class ImunizacaoService {
             throw new ApiException("Imunização não encontrado.");
         }
     }
+
+    public Imunizacoes consultarImunizacaoPorIdPaciente(Long id) throws ApiException {
+        try {
+            return imunizacaoRepository.consultarImunizacaoPorIdPaciente(id);
+        } catch (Exception e) {
+            throw new ApiException("Imunização não encontrado.");
+        }
+    }
 }
