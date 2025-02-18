@@ -6,6 +6,7 @@ import com.hackathon.carteiravacinal.repository.ImunizacaoRepository;
 import com.hackathon.carteiravacinal.repository.PacienteRepository;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.hackathon.carteiravacinal.exceptions.ApiException;
@@ -74,7 +75,7 @@ public class ImunizacaoService {
         return imunizacaoRepository.consultarTodasImunizacoes();
     }
 
-    public Imunizacoes consultarImunizacaoPorIdImunizacao(Long id) throws ApiException {
+    public List<Imunizacoes> consultarImunizacaoPorIdImunizacao(Long id) throws ApiException {
         try {
             return imunizacaoRepository.consultarImunizacaoPorIdImunizacao(id);
         } catch (Exception e) {
@@ -82,11 +83,20 @@ public class ImunizacaoService {
         }
     }
 
-    public Imunizacoes consultarImunizacaoPorIdPaciente(Long id) throws ApiException {
+    public List<Imunizacoes> consultarImunizacaoPorIdPaciente(Long id) throws ApiException {
         try {
             return imunizacaoRepository.consultarImunizacaoPorIdPaciente(id);
         } catch (Exception e) {
             throw new ApiException("Imunização não encontrado.");
+        }
+    }
+
+    public List<Imunizacoes> consultarImunizacaoPorIdeIntervaloAplicacao(Long id, LocalDate dtIni, LocalDate dtFim)
+            throws ApiException {
+        try {
+            return imunizacaoRepository.consultarImunizacaoPorIdeIntervaloAplicacao(id, dtIni, dtFim);
+        } catch (Exception e) {
+            throw new ApiException("Período de imunização não encontrado.");
         }
     }
 }

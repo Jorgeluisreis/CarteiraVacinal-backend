@@ -1,5 +1,7 @@
 package com.hackathon.carteiravacinal.api;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -191,7 +193,7 @@ public class ImunizacaoApi {
     public Route consultarImunizacaoPorIdImunizacao = (Request req, Response res) -> {
         try {
             Long idImunizacao = Long.parseLong(req.params(":id"));
-            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
+            List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
 
             if (imunizacao == null) {
                 res.status(404);
@@ -212,7 +214,10 @@ public class ImunizacaoApi {
     public Route consultarImunizacaoPorIdPaciente = (Request req, Response res) -> {
         try {
             Long idPaciente = Long.parseLong(req.params(":id"));
-            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdPaciente(idPaciente);
+
+            pacienteService.buscarPacientePorId(idPaciente);
+
+            List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdPaciente(idPaciente);
 
             if (imunizacao == null) {
                 res.status(404);
@@ -227,6 +232,38 @@ public class ImunizacaoApi {
         } catch (ApiException e) {
             res.status(500);
             return "Erro ao consultar a imunização por paciente: " + e.getMessage();
+        }
+    };
+
+    public Route consultarImunizacaoPorIdeIntervaloAplicacao = (Request req, Response res) -> {
+        try {
+            Long idPaciente = Long.parseLong(req.params(":id"));
+            String dtIniStr = req.params(":dt_ini");
+            String dtFimStr = req.params(":dt_fim");
+
+            pacienteService.buscarPacientePorId(idPaciente);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            LocalDate dtIni = LocalDate.parse(dtIniStr, formatter);
+            LocalDate dtFim = LocalDate.parse(dtFimStr, formatter);
+
+            List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdeIntervaloAplicacao(idPaciente,
+                    dtIni, dtFim);
+
+            if (imunizacao == null) {
+                res.status(404);
+                return "Período de Imunização por paciente não encontrado.";
+            }
+
+            res.status(200);
+            return gson.toJson(imunizacao);
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "ID inválido. O ID deve ser um número.";
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao consultar o período de imunização por paciente: " + e.getMessage();
         }
     };
 

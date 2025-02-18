@@ -19,5 +19,7 @@ public class RouteConfig {
         Spark.get("/imunizacao/consultar", imunizacaoApi.consultarTodasImunizacoes);
         Spark.get("/imunizacao/consultar/:id", imunizacaoApi.consultarImunizacaoPorIdImunizacao);
         Spark.get("/imunizacao/consultar/paciente/:id", imunizacaoApi.consultarImunizacaoPorIdPaciente);
+        Spark.get("imunizacao/consultar/paciente/:id/aplicacao/:dt_ini/:dt_fim",
+                imunizacaoApi.consultarImunizacaoPorIdeIntervaloAplicacao);
     }
 }
