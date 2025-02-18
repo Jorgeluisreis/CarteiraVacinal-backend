@@ -125,7 +125,15 @@ public class ImunizacaoRepository {
     }
 
     public List<Imunizacoes> consultarTodasImunizacoes() throws ApiException {
-        String query = "SELECT * FROM imunizacoes";
+        String query = """
+                SELECT i.id AS id_imunizacao, p.nome AS paciente, v.vacina AS nome_vacina, d.dose AS dose,
+                       i.data_aplicacao, i.fabricante, i.lote, i.local_aplicacao, i.profissional_aplicador
+                FROM imunizacoes i
+                INNER JOIN paciente p ON i.id_paciente = p.id
+                INNER JOIN dose d ON i.id_dose = d.id
+                INNER JOIN vacina v ON d.id_vacina = v.id;
+                """;
+
         List<Imunizacoes> imunizacoes = new ArrayList<>();
 
         try (Connection conn = DatabaseConfig.getConnection();
@@ -134,9 +142,10 @@ public class ImunizacaoRepository {
 
             while (resultSet.next()) {
                 Imunizacoes imunizacao = new Imunizacoes();
-                imunizacao.setId(resultSet.getInt("id"));
-                imunizacao.setIdPaciente(resultSet.getLong("id_paciente"));
-                imunizacao.setIdDose(resultSet.getInt("id_dose"));
+                imunizacao.setId(resultSet.getInt("id_imunizacao"));
+                imunizacao.setNome(resultSet.getString("paciente"));
+                imunizacao.setVacina(resultSet.getString("nome_vacina"));
+                imunizacao.setDose(resultSet.getString("dose"));
                 imunizacao.setDataAplicacao(resultSet.getDate("data_aplicacao").toLocalDate());
                 imunizacao.setFabricante(resultSet.getString("fabricante"));
                 imunizacao.setLote(resultSet.getString("lote"));
