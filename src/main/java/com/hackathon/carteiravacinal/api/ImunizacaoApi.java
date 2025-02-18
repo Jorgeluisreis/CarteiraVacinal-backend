@@ -191,7 +191,7 @@ public class ImunizacaoApi {
     public Route consultarImunizacaoPorIdImunizacao = (Request req, Response res) -> {
         try {
             Long idImunizacao = Long.parseLong(req.params(":id"));
-            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
+            List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
 
             if (imunizacao == null) {
                 res.status(404);
@@ -212,7 +212,7 @@ public class ImunizacaoApi {
     public Route consultarImunizacaoPorIdPaciente = (Request req, Response res) -> {
         try {
             Long idPaciente = Long.parseLong(req.params(":id"));
-            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdPaciente(idPaciente);
+            List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdPaciente(idPaciente);
 
             if (imunizacao == null) {
                 res.status(404);
