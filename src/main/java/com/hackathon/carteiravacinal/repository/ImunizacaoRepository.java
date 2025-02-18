@@ -6,7 +6,10 @@ import com.hackathon.carteiravacinal.exceptions.ApiException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImunizacaoRepository {
 
@@ -119,5 +122,32 @@ public class ImunizacaoRepository {
 
             return affectedRows > 0;
         }
+    }
+
+    public List<Imunizacoes> consultarTodasImunizacoes() throws ApiException {
+        String query = "SELECT * FROM imunizacoes";
+        List<Imunizacoes> imunizacoes = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet resultSet = stmt.executeQuery()) {
+
+            while (resultSet.next()) {
+                Imunizacoes imunizacao = new Imunizacoes();
+                imunizacao.setId(resultSet.getInt("id"));
+                imunizacao.setIdPaciente(resultSet.getLong("id_paciente"));
+                imunizacao.setIdDose(resultSet.getInt("id_dose"));
+                imunizacao.setDataAplicacao(resultSet.getDate("data_aplicacao").toLocalDate());
+                imunizacao.setFabricante(resultSet.getString("fabricante"));
+                imunizacao.setLote(resultSet.getString("lote"));
+                imunizacao.setLocalAplicacao(resultSet.getString("local_aplicacao"));
+                imunizacao.setProfissionalAplicador(resultSet.getString("profissional_aplicador"));
+                imunizacoes.add(imunizacao);
+            }
+        } catch (SQLException e) {
+            throw new ApiException(
+                    "Erro ao acessar o banco de dados para listar todas as imunizações: " + e.getMessage(), e);
+        }
+        return imunizacoes;
     }
 }

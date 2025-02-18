@@ -1,5 +1,7 @@
 package com.hackathon.carteiravacinal.api;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.hackathon.carteiravacinal.model.*;
@@ -172,6 +174,17 @@ public class ImunizacaoApi {
         } catch (NumberFormatException e) {
             res.status(400);
             return "Erro no formato do ID.";
+        }
+    };
+
+    public Route consultarTodasImunizacoes = (Request req, Response res) -> {
+        try {
+            List<Imunizacoes> imunizacoes = imunizacaoService.consultarTodasImunizacoes();
+            res.status(200);
+            return gson.toJson(imunizacoes);
+        } catch (ApiException e) {
+            res.status(400);
+            return "Erro ao listar as imunizações: " + e.getMessage();
         }
     };
 
