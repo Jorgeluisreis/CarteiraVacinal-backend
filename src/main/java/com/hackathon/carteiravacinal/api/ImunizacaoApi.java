@@ -188,6 +188,48 @@ public class ImunizacaoApi {
         }
     };
 
+    public Route consultarImunizacaoPorIdImunizacao = (Request req, Response res) -> {
+        try {
+            Long idImunizacao = Long.parseLong(req.params(":id"));
+            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
+
+            if (imunizacao == null) {
+                res.status(404);
+                return "Imunização não encontrada.";
+            }
+
+            res.status(200);
+            return gson.toJson(imunizacao);
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "ID inválido. O ID deve ser um número.";
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao consultar a imunização: " + e.getMessage();
+        }
+    };
+
+    public Route consultarImunizacaoPorIdPaciente = (Request req, Response res) -> {
+        try {
+            Long idPaciente = Long.parseLong(req.params(":id"));
+            Imunizacoes imunizacao = imunizacaoService.consultarImunizacaoPorIdPaciente(idPaciente);
+
+            if (imunizacao == null) {
+                res.status(404);
+                return "Imunização por paciente não encontrada.";
+            }
+
+            res.status(200);
+            return gson.toJson(imunizacao);
+        } catch (NumberFormatException e) {
+            res.status(400);
+            return "ID inválido. O ID deve ser um número.";
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao consultar a imunização por paciente: " + e.getMessage();
+        }
+    };
+
     private boolean isImunizacaoIgual(Imunizacoes imunizacaoBanco, Imunizacoes imunizacaoBody) {
         return imunizacaoBanco.getDataAplicacao().equals(imunizacaoBody.getDataAplicacao()) &&
                 imunizacaoBanco.getFabricante().equals(imunizacaoBody.getFabricante()) &&

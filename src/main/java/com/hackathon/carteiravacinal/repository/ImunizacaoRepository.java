@@ -159,4 +159,88 @@ public class ImunizacaoRepository {
         }
         return imunizacoes;
     }
+
+    public Imunizacoes consultarImunizacaoPorIdImunizacao(Long id) throws ApiException {
+        String query = """
+                SELECT i.id AS id_imunizacao, p.nome AS paciente, v.vacina AS nome_vacina, d.dose AS dose,
+                       i.data_aplicacao, i.fabricante, i.lote, i.local_aplicacao, i.profissional_aplicador
+                FROM imunizacoes i
+                INNER JOIN paciente p ON i.id_paciente = p.id
+                INNER JOIN dose d ON i.id_dose = d.id
+                INNER JOIN vacina v ON d.id_vacina = v.id
+                WHERE i.id = ?;
+                """;
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+            var resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                Imunizacoes imunizacao = new Imunizacoes();
+
+                imunizacao.setId(resultSet.getInt("id_imunizacao"));
+                imunizacao.setNome(resultSet.getString("paciente"));
+                imunizacao.setVacina(resultSet.getString("nome_vacina"));
+                imunizacao.setDose(resultSet.getString("dose"));
+                imunizacao.setDataAplicacao(resultSet.getDate("data_aplicacao").toLocalDate());
+                imunizacao.setFabricante(resultSet.getString("fabricante"));
+                imunizacao.setLote(resultSet.getString("lote"));
+                imunizacao.setLocalAplicacao(resultSet.getString("local_aplicacao"));
+                imunizacao.setProfissionalAplicador(resultSet.getString("profissional_aplicador"));
+
+                return imunizacao;
+            } else {
+                throw new ApiException("Imunização não encontrada com o ID fornecido.");
+            }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para buscar a imunização: " + e.getMessage(), e);
+        } catch (ArithmeticException e) {
+            throw new ApiException("Erro de conversão: ID da imunização ou ID da dose é muito grande para um inteiro.",
+                    e);
+        }
+    }
+
+    public Imunizacoes consultarImunizacaoPorIdPaciente(Long id) throws ApiException {
+        String query = """
+                SELECT i.id AS id_imunizacao, p.nome AS paciente, v.vacina AS nome_vacina, d.dose AS dose,
+                       i.data_aplicacao, i.fabricante, i.lote, i.local_aplicacao, i.profissional_aplicador
+                FROM imunizacoes i
+                INNER JOIN paciente p ON i.id_paciente = p.id
+                INNER JOIN dose d ON i.id_dose = d.id
+                INNER JOIN vacina v ON d.id_vacina = v.id
+                WHERE p.id = ?;
+                """;
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+            var resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                Imunizacoes imunizacao = new Imunizacoes();
+
+                imunizacao.setId(resultSet.getInt("id_imunizacao"));
+                imunizacao.setNome(resultSet.getString("paciente"));
+                imunizacao.setVacina(resultSet.getString("nome_vacina"));
+                imunizacao.setDose(resultSet.getString("dose"));
+                imunizacao.setDataAplicacao(resultSet.getDate("data_aplicacao").toLocalDate());
+                imunizacao.setFabricante(resultSet.getString("fabricante"));
+                imunizacao.setLote(resultSet.getString("lote"));
+                imunizacao.setLocalAplicacao(resultSet.getString("local_aplicacao"));
+                imunizacao.setProfissionalAplicador(resultSet.getString("profissional_aplicador"));
+
+                return imunizacao;
+            } else {
+                throw new ApiException("Imunização por paciente não encontrada com o ID fornecido.");
+            }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para buscar a imunização: " + e.getMessage(), e);
+        } catch (ArithmeticException e) {
+            throw new ApiException("Erro de conversão: ID da do Paciente ou ID da dose é muito grande para um inteiro.",
+                    e);
+        }
+    }
 }
