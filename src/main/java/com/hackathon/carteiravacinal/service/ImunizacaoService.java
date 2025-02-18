@@ -6,6 +6,7 @@ import com.hackathon.carteiravacinal.repository.ImunizacaoRepository;
 import com.hackathon.carteiravacinal.repository.PacienteRepository;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.hackathon.carteiravacinal.exceptions.ApiException;
 
@@ -67,5 +68,9 @@ public class ImunizacaoService {
         } catch (Exception e) {
             throw new ApiException("Falha ao excluir a Imunização.");
         }
+    }
+
+    public List<Imunizacoes> consultarTodasImunizacoes() throws ApiException {
+        return imunizacaoRepository.consultarTodasImunizacoes();
     }
 }

@@ -7,6 +7,9 @@ public class Imunizacoes {
     private Integer id;
     private Long idPaciente;
     private Integer idDose;
+    private String nome;
+    private String vacina;
+    private String dose;
     private LocalDate dataAplicacao;
     private String fabricante;
     private String lote;
@@ -37,6 +40,30 @@ public class Imunizacoes {
 
     public void setIdDose(int idDose) {
         this.idDose = idDose;
+    }
+
+    public String getVacina() {
+        return vacina;
+    }
+
+    public void setVacina(String vacina) {
+        this.vacina = vacina;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public LocalDate getDataAplicacao() {
