@@ -1,20 +1,20 @@
 package com.hackathon.carteiravacinal.model;
 
 public class Vacina {
-    private int id;
+    private Long id;
     private String vacina;
     private String descricao;
     private Integer limiteAplicacao;
     private PublicoAlvo publicoAlvo;
 
     public enum PublicoAlvo {
-        CRIANCA, ADOLESCENTE, ADULTO, GESTANTE
+        CRIANÇA, ADOLESCENTE, ADULTO, GESTANTE
     }
 
     public Vacina() {
     }
 
-    public Vacina(int id, String vacina, String descricao, Integer limiteAplicacao, PublicoAlvo publicoAlvo) {
+    public Vacina(Long id, String vacina, String descricao, Integer limiteAplicacao, PublicoAlvo publicoAlvo) {
         this.id = id;
         this.vacina = vacina;
         this.descricao = descricao;
@@ -22,11 +22,11 @@ public class Vacina {
         this.publicoAlvo = publicoAlvo;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
