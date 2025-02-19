@@ -23,7 +23,12 @@ public class Main {
         ImunizacaoService imunizacaoService = new ImunizacaoService(imunizacaoRepository, pacienteRepository);
         ImunizacaoApi imunizacaoApi = new ImunizacaoApi(imunizacaoService, pacienteService);
 
-        RouteConfig.configurarRotas(pacienteApi, imunizacaoApi);
+        // Vacina
+        VacinaRepository vacinaRepository = new VacinaRepository();
+        VacinaService vacinaService = new VacinaService(vacinaRepository);
+        VacinaApi vacinaApi = new VacinaApi(vacinaService);
+
+        RouteConfig.configurarRotas(pacienteApi, imunizacaoApi, vacinaApi);
 
         System.out.printf("Servidor rodando na porta %d...\n", porta);
     }
