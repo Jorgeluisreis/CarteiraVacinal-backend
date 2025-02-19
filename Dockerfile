@@ -1,5 +1,7 @@
-FROM maven:3.8.6-openjdk-21 AS builder
+FROM openjdk:21-jdk-slim AS builder
 WORKDIR /app
+
+RUN apt-get update && apt-get install -y maven
 
 COPY . .
 
