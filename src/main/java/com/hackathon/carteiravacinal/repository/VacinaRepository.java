@@ -55,7 +55,9 @@ public class VacinaRepository {
                 "  d.id, " +
                 "  v.vacina, " +
                 "  d.dose, " +
-                "  v.limite_aplicacao " +
+                "  d.idade_recomendada_aplicacao, " +
+                "  v.limite_aplicacao, " +
+                "  v.publico_alvo " +
                 "FROM vacina v " +
                 "INNER JOIN dose d ON v.id = d.id_vacina " +
                 "WHERE v.publico_alvo = ?";
@@ -73,8 +75,11 @@ public class VacinaRepository {
                 vacina.setId(resultSet.getLong("id"));
                 vacina.setVacina(resultSet.getString("vacina"));
                 vacina.setDose(resultSet.getString("dose"));
+                vacina.setidadeRecomendadaMeses(resultSet.getInt("idade_recomendada_aplicacao"));
                 vacina.setLimiteAplicacao(resultSet.getInt("limite_aplicacao"));
-                vacina.setPublicoAlvo(faixaEtaria);
+
+                String publicoAlvoStr = resultSet.getString("publico_alvo");
+                vacina.setPublicoAlvo(Vacina.PublicoAlvo.valueOf(publicoAlvoStr));
 
                 vacinas.add(vacina);
             }
