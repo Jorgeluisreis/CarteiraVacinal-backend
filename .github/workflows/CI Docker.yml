@@ -10,6 +10,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -33,3 +34,10 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Set environment variables for future steps
+        run: |
+          echo "DOCKER_IMAGE_TAG=${{ steps.meta.outputs.tags }}" >> $GITHUB_ENV
+
+      - name: Display Docker image tag
+        run: echo "Docker Image Tag: $DOCKER_IMAGE_TAG"
