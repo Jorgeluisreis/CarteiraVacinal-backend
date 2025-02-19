@@ -17,4 +17,9 @@ public class VacinaService {
     public List<Vacina> consultarTodasVacinas() throws ApiException {
         return vacinaRepository.consultarTodasVacinas();
     }
+
+    public List<Vacina> consultarTodasVacinasPorFaixaEtaria(Vacina.PublicoAlvo faixaEtaria) throws ApiException {
+        return vacinaRepository.consultarTodasVacinasPorFaixaEtaria(faixaEtaria);
+    }
+
 }

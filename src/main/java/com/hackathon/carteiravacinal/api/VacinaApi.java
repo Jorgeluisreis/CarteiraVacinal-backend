@@ -37,4 +37,31 @@ public class VacinaApi {
         }
     };
 
+    public Route consultarTodasVacinasPorFaixaEtaria = (Request req, Response res) -> {
+        try {
+            String faixaEtariaStr = req.params(":faixa").toUpperCase();
+
+            Vacina.PublicoAlvo faixaEtaria;
+            try {
+                faixaEtaria = Vacina.PublicoAlvo.valueOf(faixaEtariaStr);
+            } catch (IllegalArgumentException e) {
+                res.status(400);
+                return "Faixa etária inválida. Utilize: CRIANÇA, ADOLESCENTE, ADULTO ou GESTANTE.";
+            }
+
+            List<Vacina> vacinas = vacinaService.consultarTodasVacinasPorFaixaEtaria(faixaEtaria);
+
+            if (vacinas.isEmpty()) {
+                res.status(404);
+                return "Nenhuma vacina encontrada para a faixa etária: " + faixaEtariaStr;
+            }
+
+            res.status(200);
+            return gson.toJson(vacinas);
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao listar vacinas: " + e.getMessage();
+        }
+    };
+
 }

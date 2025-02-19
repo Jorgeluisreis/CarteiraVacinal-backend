@@ -49,4 +49,39 @@ public class VacinaRepository {
 
         return vacinas;
     }
+
+    public List<Vacina> consultarTodasVacinasPorFaixaEtaria(Vacina.PublicoAlvo faixaEtaria) throws ApiException {
+        String query = "SELECT " +
+                "  d.id, " +
+                "  v.vacina, " +
+                "  d.dose, " +
+                "  v.limite_aplicacao " +
+                "FROM vacina v " +
+                "INNER JOIN dose d ON v.id = d.id_vacina " +
+                "WHERE v.publico_alvo = ?";
+
+        List<Vacina> vacinas = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, faixaEtaria.name());
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                Vacina vacina = new Vacina();
+                vacina.setId(resultSet.getLong("id"));
+                vacina.setVacina(resultSet.getString("vacina"));
+                vacina.setDose(resultSet.getString("dose"));
+                vacina.setLimiteAplicacao(resultSet.getInt("limite_aplicacao"));
+                vacina.setPublicoAlvo(faixaEtaria);
+
+                vacinas.add(vacina);
+            }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para listar as vacinas: " + e.getMessage(), e);
+        }
+
+        return vacinas;
+    }
 }

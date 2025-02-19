@@ -23,5 +23,6 @@ public class RouteConfig {
                 imunizacaoApi.consultarImunizacaoPorIdeIntervaloAplicacao);
 
         Spark.get("/vacinas/consultar", vacinaApi.consultarTodasVacinas);
+        Spark.get("/vacinas/consultar/faixa_etaria/:faixa", vacinaApi.consultarTodasVacinasPorFaixaEtaria);
     }
 }
