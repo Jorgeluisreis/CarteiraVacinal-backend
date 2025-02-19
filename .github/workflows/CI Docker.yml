@@ -36,8 +36,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Set environment variables for future steps
-        run: |
-          echo "DOCKER_IMAGE_TAG=${{ steps.meta.outputs.tags }}" >> $GITHUB_ENV
+        run: echo "DOCKER_IMAGE_TAG=${{ steps.meta.outputs.tags }}" >> $GITHUB_ENV
 
       - name: Display Docker image tag
-        run: echo "Docker Image Tag: $DOCKER_IMAGE_TAG"
+        run: echo "Docker Image Tag: ${{ env.DOCKER_IMAGE_TAG }}"
