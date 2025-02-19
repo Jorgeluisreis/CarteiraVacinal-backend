@@ -14,7 +14,16 @@ import com.hackathon.carteiravacinal.model.Vacina;
 public class VacinaRepository {
 
     public List<Vacina> consultarTodasVacinas() throws ApiException {
-        String query = "SELECT * FROM vacina";
+        String query = "SELECT " +
+                "  v.id, " +
+                "  v.vacina, " +
+                "  d.dose, " +
+                "  d.idade_recomendada_aplicacao, " +
+                "  v.limite_aplicacao, " +
+                "  v.publico_alvo " +
+                "FROM vacina v " +
+                "INNER JOIN dose d ON v.id = d.id_vacina";
+
         List<Vacina> vacinas = new ArrayList<>();
 
         try (Connection conn = DatabaseConfig.getConnection();
@@ -25,7 +34,8 @@ public class VacinaRepository {
                 Vacina vacina = new Vacina();
                 vacina.setId(resultSet.getLong("id"));
                 vacina.setVacina(resultSet.getString("vacina"));
-                vacina.setDescricao(resultSet.getString("descricao"));
+                vacina.setDose(resultSet.getString("dose"));
+                vacina.setidadeRecomendadaMeses(resultSet.getInt("idade_recomendada_aplicacao"));
                 vacina.setLimiteAplicacao(resultSet.getInt("limite_aplicacao"));
 
                 String publicoAlvoStr = resultSet.getString("publico_alvo");

@@ -3,6 +3,8 @@ package com.hackathon.carteiravacinal.model;
 public class Vacina {
     private Long id;
     private String vacina;
+    private String dose;
+    private Integer idadeRecomendadaMeses;
     private String descricao;
     private Integer limiteAplicacao;
     private PublicoAlvo publicoAlvo;
@@ -14,9 +16,12 @@ public class Vacina {
     public Vacina() {
     }
 
-    public Vacina(Long id, String vacina, String descricao, Integer limiteAplicacao, PublicoAlvo publicoAlvo) {
+    public Vacina(Long id, String vacina, String dose, Integer idadeRecomendadaMeses, String descricao,
+            Integer limiteAplicacao, PublicoAlvo publicoAlvo) {
         this.id = id;
         this.vacina = vacina;
+        this.dose = dose;
+        this.idadeRecomendadaMeses = idadeRecomendadaMeses;
         this.descricao = descricao;
         this.limiteAplicacao = limiteAplicacao;
         this.publicoAlvo = publicoAlvo;
@@ -36,6 +41,22 @@ public class Vacina {
 
     public void setVacina(String vacina) {
         this.vacina = vacina;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public Integer getidadeRecomendadaMeses() {
+        return idadeRecomendadaMeses;
+    }
+
+    public void setidadeRecomendadaMeses(Integer idadeRecomendadaMeses) {
+        this.idadeRecomendadaMeses = idadeRecomendadaMeses;
     }
 
     public String getDescricao() {
