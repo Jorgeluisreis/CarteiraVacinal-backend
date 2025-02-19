@@ -1,18 +1,15 @@
 package com.hackathon.carteiravacinal;
 
-import com.hackathon.carteiravacinal.api.ImunizacaoApi;
-import com.hackathon.carteiravacinal.api.PacienteApi;
-import com.hackathon.carteiravacinal.repository.ImunizacaoRepository;
-import com.hackathon.carteiravacinal.repository.PacienteRepository;
-import com.hackathon.carteiravacinal.service.ImunizacaoService;
-import com.hackathon.carteiravacinal.service.PacienteService;
+import com.hackathon.carteiravacinal.api.*;
+import com.hackathon.carteiravacinal.repository.*;
+import com.hackathon.carteiravacinal.service.*;
 import com.hackathon.carteiravacinal.config.RouteConfig;
 import spark.Spark;
 
 public class Main {
 
     public static void main(String[] args) {
-        int porta = 3000;
+        int porta = 3300;
 
         Spark.port(porta);
 
