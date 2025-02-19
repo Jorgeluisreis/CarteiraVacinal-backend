@@ -6,7 +6,7 @@
 
     <groupId>com.hackathon.carteiravacinal</groupId>
     <artifactId>carteiravacinal-backend</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
