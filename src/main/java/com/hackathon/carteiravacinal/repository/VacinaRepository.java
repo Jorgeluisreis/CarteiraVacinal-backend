@@ -15,7 +15,7 @@ public class VacinaRepository {
 
     public List<Vacina> consultarTodasVacinas() throws ApiException {
         String query = "SELECT " +
-                "  v.id, " +
+                "  d.id, " +
                 "  v.vacina, " +
                 "  d.dose, " +
                 "  d.idade_recomendada_aplicacao, " +
