@@ -8,13 +8,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
-    private static final String HOST = dotenv.get("DB_HOST");
-    private static final String PORT = dotenv.get("DB_PORT");
-    private static final String DATABASE = dotenv.get("DB_NAME");
-    private static final String USER = dotenv.get("DB_USER");
-    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
+    private static String getEnv(String key, String defaultValue) {
+        String envValue = System.getenv(key);
+        return (envValue != null && !envValue.isEmpty()) ? envValue : dotenv.get(key, defaultValue);
+    }
+
+    private static final String HOST = getEnv("DB_HOST", "localhost");
+    private static final String PORT = getEnv("DB_PORT", "3306");
+    private static final String DATABASE = getEnv("DB_NAME", "vacinacao");
+    private static final String USER = getEnv("DB_USER", "root");
+    private static final String PASSWORD = getEnv("DB_PASSWORD", "carteira");
 
     private static HikariDataSource dataSource;
 
