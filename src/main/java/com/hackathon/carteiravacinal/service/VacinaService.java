@@ -22,4 +22,7 @@ public class VacinaService {
         return vacinaRepository.consultarTodasVacinasPorFaixaEtaria(faixaEtaria);
     }
 
+    public List<Vacina> consultarTodasVacinasRecomendadasAcimaIdade(int meses) throws ApiException {
+        return vacinaRepository.consultarTodasVacinasRecomendadasAcimaIdade(meses);
+    }
 }

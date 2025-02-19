@@ -89,4 +89,44 @@ public class VacinaRepository {
 
         return vacinas;
     }
+
+    public List<Vacina> consultarTodasVacinasRecomendadasAcimaIdade(int meses) throws ApiException {
+        String query = "SELECT " +
+                "  v.id, " +
+                "  v.vacina, " +
+                "  d.dose, " +
+                "  d.idade_recomendada_aplicacao, " +
+                "  v.limite_aplicacao, " +
+                "  v.publico_alvo " +
+                "FROM vacina v " +
+                "INNER JOIN dose d ON v.id = d.id_vacina " +
+                "WHERE d.idade_recomendada_aplicacao > ?";
+
+        List<Vacina> vacinas = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, meses);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                Vacina vacina = new Vacina();
+                vacina.setId(resultSet.getLong("id"));
+                vacina.setVacina(resultSet.getString("vacina"));
+                vacina.setDose(resultSet.getString("dose"));
+                vacina.setidadeRecomendadaMeses(resultSet.getInt("idade_recomendada_aplicacao"));
+                vacina.setLimiteAplicacao(resultSet.getInt("limite_aplicacao"));
+
+                String publicoAlvoStr = resultSet.getString("publico_alvo");
+                vacina.setPublicoAlvo(Vacina.PublicoAlvo.valueOf(publicoAlvoStr));
+
+                vacinas.add(vacina);
+            }
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao acessar o banco de dados para listar as vacinas: " + e.getMessage(), e);
+        }
+
+        return vacinas;
+    }
 }

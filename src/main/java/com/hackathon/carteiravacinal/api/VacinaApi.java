@@ -64,4 +64,31 @@ public class VacinaApi {
         }
     };
 
+    public Route consultarTodasVacinasRecomendadasAcimaIdade = (Request req, Response res) -> {
+        try {
+            String mesesParam = req.params(":meses");
+
+            if (mesesParam == null || !mesesParam.matches("\\d+")) {
+                res.status(400);
+                return "Erro: Os meses devem ser um número inteiro.";
+            }
+
+            int meses = Integer.parseInt(mesesParam);
+            List<Vacina> vacinas = vacinaService.consultarTodasVacinasRecomendadasAcimaIdade(meses);
+
+            if (vacinas.isEmpty()) {
+                res.status(404);
+                return "Nenhuma vacina encontrada para idade acima de " + meses + " meses.";
+            }
+
+            res.status(200);
+            return gson.toJson(vacinas);
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao listar vacinas: " + e.getMessage();
+        } catch (Exception e) {
+            res.status(500);
+            return "Erro inesperado: " + e.getMessage();
+        }
+    };
 }
