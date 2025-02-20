@@ -5,7 +5,8 @@ import spark.Spark;
 
 public class RouteConfig {
 
-    public static void configurarRotas(PacienteApi pacienteApi, ImunizacaoApi imunizacaoApi, VacinaApi vacinaApi) {
+    public static void configurarRotas(PacienteApi pacienteApi, ImunizacaoApi imunizacaoApi, VacinaApi vacinaApi,
+            EstatisticaApi estatisticaApi) {
         Spark.post("/paciente/inserir", pacienteApi.adicionarPaciente);
         Spark.put("/paciente/alterar/:id", pacienteApi.alterarPaciente);
         Spark.delete("/paciente/excluir/:id", pacienteApi.excluirPaciente);
@@ -27,5 +28,7 @@ public class RouteConfig {
         Spark.get("/vacinas/consultar/idade_maior/:meses", vacinaApi.consultarTodasVacinasRecomendadasAcimaIdade);
         Spark.get("/vacinas/consultar/nao_aplivacaveis/paciente/:id",
                 vacinaApi.consultarTodasVacinasNaoAplicaveisParaPaciente);
+
+        Spark.get("/estatisticas/imunizacoes/paciente/:id", estatisticaApi.qtdeVacinasAplicadasPorPaciente);
     }
 }
