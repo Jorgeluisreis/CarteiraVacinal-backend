@@ -31,5 +31,6 @@ public class RouteConfig {
 
         Spark.get("/estatisticas/imunizacoes/paciente/:id", estatisticaApi.qtdeVacinasAplicadasPorPaciente);
         Spark.get("/estatisticas/proximas_imunizacoes/paciente/:id", estatisticaApi.qtdeVacinasProximasPorPaciente);
+        Spark.get("/estatisticas/imunizacoes_atrasadas/paciente/:id", estatisticaApi.qtdeVacinasAtrasadasPorPaciente);
     }
 }

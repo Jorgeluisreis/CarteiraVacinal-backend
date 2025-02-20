@@ -30,4 +30,11 @@ public class EstatisticaService {
         }
     }
 
+    public int qtdeVacinasAtrasadasPorPaciente(Paciente paciente) throws ApiException {
+        try {
+            return estatisticaRepository.qtdeVacinasAtrasadasPorPaciente(paciente);
+        } catch (Exception e) {
+            throw new ApiException("Erro ao obter vacinas atrasadas.");
+        }
+    }
 }
