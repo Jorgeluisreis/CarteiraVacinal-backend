@@ -11,6 +11,8 @@ import com.hackathon.carteiravacinal.service.PacienteService;
 import com.hackathon.carteiravacinal.service.VacinaService;
 import com.hackathon.carteiravacinal.util.LocalDateAdapter;
 import com.hackathon.carteiravacinal.exceptions.ApiException;
+import com.hackathon.carteiravacinal.model.Paciente;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -60,4 +62,33 @@ public class EstatisticaApi {
         }
     };
 
+    public Route qtdeVacinasProximasPorPaciente = (Request req, Response res) -> {
+        try {
+            String idPacienteParam = req.params(":id");
+
+            if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
+                res.status(400);
+                return "Erro: O ID do paciente deve ser um número inteiro.";
+            }
+
+            Long idPaciente = Long.parseLong(idPacienteParam);
+            Paciente paciente = pacienteService.buscarPacientePorId(idPaciente);
+
+            if (paciente == null) {
+                res.status(404);
+                return "Erro: Paciente não encontrado.";
+            }
+
+            int quantidade = estatisticaService.qtdeVacinasProximasPorPaciente(paciente);
+
+            res.status(200);
+            return gson.toJson(Map.of("quantidade", quantidade));
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao buscar a quantidade de vacinas para o próximo mês: " + e.getMessage();
+        } catch (Exception e) {
+            res.status(500);
+            return "Erro inesperado: " + e.getMessage();
+        }
+    };
 }

@@ -30,5 +30,6 @@ public class RouteConfig {
                 vacinaApi.consultarTodasVacinasNaoAplicaveisParaPaciente);
 
         Spark.get("/estatisticas/imunizacoes/paciente/:id", estatisticaApi.qtdeVacinasAplicadasPorPaciente);
+        Spark.get("/estatisticas/proximas_imunizacoes/paciente/:id", estatisticaApi.qtdeVacinasProximasPorPaciente);
     }
 }

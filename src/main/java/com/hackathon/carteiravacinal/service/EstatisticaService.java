@@ -1,6 +1,7 @@
 package com.hackathon.carteiravacinal.service;
 
 import com.hackathon.carteiravacinal.exceptions.ApiException;
+import com.hackathon.carteiravacinal.model.Paciente;
 import com.hackathon.carteiravacinal.repository.EstatisticaRepository;
 
 public class EstatisticaService {
@@ -15,6 +16,15 @@ public class EstatisticaService {
             throws ApiException {
         try {
             return estatisticaRepository.contarVacinasAplicadasPorPaciente(idPaciente);
+        } catch (Exception e) {
+            throw new ApiException("Imunizações não encontradas.");
+        }
+    }
+
+    public int qtdeVacinasProximasPorPaciente(Paciente Paciente)
+            throws ApiException {
+        try {
+            return estatisticaRepository.qtdeVacinasProximasPorPaciente(Paciente);
         } catch (Exception e) {
             throw new ApiException("Imunizações não encontradas.");
         }
