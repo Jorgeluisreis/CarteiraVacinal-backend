@@ -26,7 +26,7 @@ public class Main {
         // Vacina
         VacinaRepository vacinaRepository = new VacinaRepository();
         VacinaService vacinaService = new VacinaService(vacinaRepository);
-        VacinaApi vacinaApi = new VacinaApi(vacinaService);
+        VacinaApi vacinaApi = new VacinaApi(vacinaService, pacienteService);
 
         RouteConfig.configurarRotas(pacienteApi, imunizacaoApi, vacinaApi);
 

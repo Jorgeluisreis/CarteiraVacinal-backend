@@ -129,4 +129,39 @@ public class VacinaRepository {
 
         return vacinas;
     }
+
+    public List<Vacina> consultarTodasVacinasNaoAplicaveisParaPaciente(Long idPaciente) throws ApiException {
+        String query = "SELECT " +
+                "  v.id, " +
+                "  v.vacina, " +
+                "  d.dose, " +
+                "  v.limite_aplicacao " +
+                "FROM vacina v " +
+                "INNER JOIN dose d ON v.id = d.id_vacina " +
+                "WHERE v.limite_aplicacao < (SELECT TIMESTAMPDIFF(MONTH, p.data_nascimento, CURDATE()) " +
+                "                            FROM paciente p WHERE p.id = ?)";
+
+        List<Vacina> vacinas = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idPaciente);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                Vacina vacina = new Vacina();
+                vacina.setId(resultSet.getLong("id"));
+                vacina.setVacina(resultSet.getString("vacina"));
+                vacina.setDose(resultSet.getString("dose"));
+                vacina.setLimiteAplicacao(resultSet.getInt("limite_aplicacao"));
+                vacinas.add(vacina);
+            }
+        } catch (SQLException e) {
+            throw new ApiException(
+                    "Erro ao acessar o banco de dados para listar as vacinas não aplicáveis: " + e.getMessage(), e);
+        }
+
+        return vacinas;
+    }
 }

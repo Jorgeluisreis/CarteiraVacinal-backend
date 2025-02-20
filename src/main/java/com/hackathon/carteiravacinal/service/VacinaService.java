@@ -25,4 +25,8 @@ public class VacinaService {
     public List<Vacina> consultarTodasVacinasRecomendadasAcimaIdade(int meses) throws ApiException {
         return vacinaRepository.consultarTodasVacinasRecomendadasAcimaIdade(meses);
     }
+
+    public List<Vacina> consultarTodasVacinasNaoAplicaveisParaPaciente(Long idPaciente) throws ApiException {
+        return vacinaRepository.consultarTodasVacinasNaoAplicaveisParaPaciente(idPaciente);
+    }
 }

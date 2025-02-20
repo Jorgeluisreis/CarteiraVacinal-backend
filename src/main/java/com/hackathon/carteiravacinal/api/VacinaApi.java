@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hackathon.carteiravacinal.exceptions.ApiException;
 import com.hackathon.carteiravacinal.model.Vacina;
+import com.hackathon.carteiravacinal.service.PacienteService;
 import com.hackathon.carteiravacinal.service.VacinaService;
 import com.hackathon.carteiravacinal.util.LocalDateAdapter;
 
@@ -16,10 +17,12 @@ import spark.Route;
 
 public class VacinaApi {
     private VacinaService vacinaService;
+    private PacienteService pacienteService;
     private Gson gson;
 
-    public VacinaApi(VacinaService vacinaService) {
+    public VacinaApi(VacinaService vacinaService, PacienteService pacienteService) {
         this.vacinaService = vacinaService;
+        this.pacienteService = pacienteService;
 
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
@@ -86,6 +89,30 @@ public class VacinaApi {
         } catch (ApiException e) {
             res.status(500);
             return "Erro ao listar vacinas: " + e.getMessage();
+        } catch (Exception e) {
+            res.status(500);
+            return "Erro inesperado: " + e.getMessage();
+        }
+    };
+
+    public Route consultarTodasVacinasNaoAplicaveisParaPaciente = (Request req, Response res) -> {
+        try {
+            Long idPaciente = Long.parseLong(req.params(":id"));
+
+            pacienteService.buscarPacientePorId(idPaciente);
+
+            List<Vacina> vacinas = vacinaService.consultarTodasVacinasNaoAplicaveisParaPaciente(idPaciente);
+
+            if (vacinas.isEmpty()) {
+                res.status(404);
+                return "Nenhuma vacina não aplicável foi para este paciente.";
+            }
+
+            res.status(200);
+            return gson.toJson(vacinas);
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao listar de vacinas vacinas não aplicáveis: " + e.getMessage();
         } catch (Exception e) {
             res.status(500);
             return "Erro inesperado: " + e.getMessage();
