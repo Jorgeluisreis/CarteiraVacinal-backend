@@ -121,4 +121,57 @@ public class EstatisticaApi {
             return "Erro inesperado: " + e.getMessage();
         }
     };
+
+    public Route qtdeVacinasAcimaDeIdade = (Request req, Response res) -> {
+        try {
+            String mesesParam = req.params(":meses");
+
+            if (mesesParam == null || !mesesParam.matches("\\d+")) {
+                res.status(400);
+                return "Erro: A idade em meses deve ser um número inteiro.";
+            }
+
+            int idadeMeses = Integer.parseInt(mesesParam);
+            int quantidade = estatisticaService.qtdeVacinasAcimaDeIdade(idadeMeses);
+
+            res.status(200);
+            return gson.toJson(Map.of("quantidade", quantidade));
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao buscar a quantidade de vacinas acima da idade informada: " + e.getMessage();
+        } catch (Exception e) {
+            res.status(500);
+            return "Erro inesperado: " + e.getMessage();
+        }
+    };
+
+    public Route qtdeVacinasNaoAplicaveis = (Request req, Response res) -> {
+        try {
+            String idPacienteParam = req.params(":id");
+
+            if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
+                res.status(400);
+                return "Erro: O ID do paciente deve ser um número inteiro.";
+            }
+
+            Long idPaciente = Long.parseLong(idPacienteParam);
+            Paciente paciente = pacienteService.buscarPacientePorId(idPaciente);
+
+            if (paciente == null) {
+                res.status(404);
+                return "Erro: Paciente não encontrado.";
+            }
+
+            int quantidade = estatisticaService.qtdeVacinasNaoAplicaveis(paciente);
+
+            res.status(200);
+            return gson.toJson(Map.of("quantidade", quantidade));
+        } catch (ApiException e) {
+            res.status(500);
+            return "Erro ao buscar a quantidade de vacinas não aplicáveis: " + e.getMessage();
+        } catch (Exception e) {
+            res.status(500);
+            return "Erro inesperado: " + e.getMessage();
+        }
+    };
 }

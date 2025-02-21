@@ -37,4 +37,20 @@ public class EstatisticaService {
             throw new ApiException("Erro ao obter vacinas atrasadas.");
         }
     }
+
+    public int qtdeVacinasAcimaDeIdade(int idadeMeses) throws ApiException {
+        try {
+            return estatisticaRepository.qtdeVacinasAcimaDeIdade(idadeMeses);
+        } catch (Exception e) {
+            throw new ApiException("Erro ao obter vacinas acima da idade informada.");
+        }
+    }
+
+    public int qtdeVacinasNaoAplicaveis(Paciente paciente) throws ApiException {
+        try {
+            return estatisticaRepository.qtdeVacinasNaoAplicaveis(paciente);
+        } catch (Exception e) {
+            throw new ApiException("Erro ao buscar vacinas não aplicáveis.", e);
+        }
+    }
 }

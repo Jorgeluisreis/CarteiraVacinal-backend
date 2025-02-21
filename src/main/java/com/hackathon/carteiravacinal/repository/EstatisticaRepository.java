@@ -94,4 +94,54 @@ public class EstatisticaRepository {
                     e);
         }
     }
+
+    public int qtdeVacinasAcimaDeIdade(int idadeMeses) throws ApiException {
+        String query = """
+                    SELECT COUNT(*) AS total FROM dose d
+                    INNER JOIN vacina v ON d.id_vacina = v.id
+                    WHERE d.idade_recomendada_aplicacao > ?
+                """;
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idadeMeses);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+            return 0;
+        } catch (SQLException e) {
+            throw new ApiException(
+                    "Erro ao acessar o banco de dados para contar vacinas acima da idade informada: " + e.getMessage(),
+                    e);
+        }
+    }
+
+    public int qtdeVacinasNaoAplicaveis(Paciente paciente) throws ApiException {
+        String query = """
+                    SELECT COUNT(*) AS total FROM vacina v
+                    WHERE v.limite_aplicacao IS NOT NULL
+                    AND v.limite_aplicacao < ?
+                """;
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            LocalDate dataNascimento = paciente.getDataNascimento();
+            int idadeEmMeses = (int) Period.between(dataNascimento, LocalDate.now()).toTotalMonths();
+
+            stmt.setInt(1, idadeEmMeses);
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+            return 0;
+        } catch (SQLException e) {
+            throw new ApiException(
+                    "Erro ao acessar o banco de dados para contar vacinas não aplicáveis: " + e.getMessage(), e);
+        }
+    }
 }
