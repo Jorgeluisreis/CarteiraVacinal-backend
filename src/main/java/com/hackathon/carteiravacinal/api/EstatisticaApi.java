@@ -6,7 +6,6 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hackathon.carteiravacinal.service.EstatisticaService;
-import com.hackathon.carteiravacinal.service.ImunizacaoService;
 import com.hackathon.carteiravacinal.service.PacienteService;
 import com.hackathon.carteiravacinal.service.VacinaService;
 import com.hackathon.carteiravacinal.util.LocalDateAdapter;
@@ -18,17 +17,13 @@ import spark.Response;
 import spark.Route;
 
 public class EstatisticaApi {
-    private VacinaService vacinaService;
     private PacienteService pacienteService;
-    private ImunizacaoService imunizacaoService;
     private EstatisticaService estatisticaService;
     private Gson gson;
 
     public EstatisticaApi(VacinaService vacinaService, PacienteService pacienteService,
-            ImunizacaoService imunizacaoService, EstatisticaService estatisticaService) {
-        this.vacinaService = vacinaService;
+            EstatisticaService estatisticaService) {
         this.pacienteService = pacienteService;
-        this.imunizacaoService = imunizacaoService;
         this.estatisticaService = estatisticaService;
 
         this.gson = new GsonBuilder()

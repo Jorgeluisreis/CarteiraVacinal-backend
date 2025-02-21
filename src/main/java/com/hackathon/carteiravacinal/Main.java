@@ -31,8 +31,7 @@ public class Main {
         // Estatística
         EstatisticaRepository estatisticaRepository = new EstatisticaRepository();
         EstatisticaService estatisticaService = new EstatisticaService(estatisticaRepository);
-        EstatisticaApi estatisticaApi = new EstatisticaApi(vacinaService, pacienteService, imunizacaoService,
-                estatisticaService);
+        EstatisticaApi estatisticaApi = new EstatisticaApi(vacinaService, pacienteService, estatisticaService);
 
         RouteConfig.configurarRotas(pacienteApi, imunizacaoApi, vacinaApi, estatisticaApi);
 
