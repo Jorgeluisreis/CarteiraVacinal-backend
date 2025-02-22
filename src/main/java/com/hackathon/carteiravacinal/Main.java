@@ -4,6 +4,7 @@ import com.hackathon.carteiravacinal.api.*;
 import com.hackathon.carteiravacinal.repository.*;
 import com.hackathon.carteiravacinal.service.*;
 import com.hackathon.carteiravacinal.config.RouteConfig;
+import com.hackathon.carteiravacinal.config.CorsConfig;
 import spark.Spark;
 
 public class Main {
@@ -12,6 +13,9 @@ public class Main {
         int porta = 3300;
 
         Spark.port(porta);
+
+        // Configuração do CORS
+        CorsConfig.configurarCORS();
 
         // Paciente
         PacienteRepository pacienteRepository = new PacienteRepository();
