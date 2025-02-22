@@ -2,7 +2,7 @@ name: Publish Docker image
 
 on:
   push:
-    branches: ["Adicionar-suporte-ao-Docker"]
+    branches: ["development"]
 
 jobs:
   build-and-push-image:

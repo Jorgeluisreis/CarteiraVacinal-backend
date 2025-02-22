@@ -32,7 +32,12 @@ public class Main {
         VacinaService vacinaService = new VacinaService(vacinaRepository);
         VacinaApi vacinaApi = new VacinaApi(vacinaService, pacienteService);
 
-        RouteConfig.configurarRotas(pacienteApi, imunizacaoApi, vacinaApi);
+        // Estatística
+        EstatisticaRepository estatisticaRepository = new EstatisticaRepository();
+        EstatisticaService estatisticaService = new EstatisticaService(estatisticaRepository);
+        EstatisticaApi estatisticaApi = new EstatisticaApi(vacinaService, pacienteService, estatisticaService);
+
+        RouteConfig.configurarRotas(pacienteApi, imunizacaoApi, vacinaApi, estatisticaApi);
 
         System.out.printf("Servidor rodando na porta %d...\n", porta);
     }
