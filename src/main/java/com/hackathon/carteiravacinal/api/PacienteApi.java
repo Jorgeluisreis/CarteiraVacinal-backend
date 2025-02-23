@@ -36,36 +36,43 @@ public class PacienteApi {
 
                 if (!isValidDateFormat(dataNascimentoStr)) {
                     res.status(400);
-                    return "Erro no formato de data: a data deve ser no formato dd-MM-yyyy.";
+                    res.type("application/json");
+                    return gson.toJson("Erro no formato de data: a data deve ser no formato dd-MM-yyyy.");
                 }
             }
 
             if (paciente.getSexo() == null) {
                 res.status(400);
-                return "Sexo inválido. Escolha entre 'M' ou 'F'.";
+                res.type("application/json");
+                return gson.toJson("Sexo inválido. Escolha entre 'M' ou 'F'.");
             }
 
             if (paciente.getNome() == null || paciente.getNome().isEmpty()) {
                 res.status(400);
-                return "Nome inválido. O nome não pode ser vazio.";
+                res.type("application/json");
+                return gson.toJson("Nome inválido. O nome não pode ser vazio.");
             }
 
             if (paciente.getCpf() != null
                     && (paciente.getCpf().length() != 11 || !paciente.getCpf().matches("\\d{11}"))) {
                 res.status(400);
-                return "CPF inválido. O CPF deve ter 11 dígitos numéricos.";
+                res.type("application/json");
+                return gson.toJson("CPF inválido. O CPF deve ter 11 dígitos numéricos.");
             }
 
             Long idPaciente = pacienteService.adicionarPaciente(paciente);
 
             res.status(201);
-            return "Paciente inserido com sucesso! ID: " + idPaciente;
+            res.type("application/json");
+            return gson.toJson("Paciente inserido com sucesso! ID: " + idPaciente);
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao adicionar paciente: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao adicionar paciente: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             res.status(400);
-            return "Erro no formato de data: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro no formato de data: " + e.getMessage());
         }
     };
 
@@ -76,14 +83,17 @@ public class PacienteApi {
 
             if (pacienteRequisitado == null) {
                 res.status(404);
-                return "Paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Paciente não encontrado.");
             }
 
             Paciente paciente = gson.fromJson(req.body(), Paciente.class);
 
             if (isPacienteIgual(pacienteRequisitado, paciente)) {
                 res.status(400);
-                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+                res.type("application/json");
+                return gson.toJson(
+                        "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.");
             }
 
             Paciente pacienteAlterado = pacienteRequisitado;
@@ -110,21 +120,27 @@ public class PacienteApi {
                 boolean atualizado = pacienteService.alterarPaciente(idPacienteRequisitado, pacienteAlterado);
                 if (atualizado) {
                     res.status(200);
-                    return "Paciente atualizado com sucesso!";
+                    res.type("application/json");
+                    return gson.toJson("Paciente atualizado com sucesso!");
                 } else {
                     res.status(404);
-                    return "Erro ao atualizar paciente.";
+                    res.type("application/json");
+                    return gson.toJson("Erro ao atualizar paciente.");
                 }
             } else {
                 res.status(400);
-                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+                res.type("application/json");
+                return gson.toJson(
+                        "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.");
             }
         } catch (ApiException e) {
             res.status(400);
-            return e.getMessage();
+            res.type("application/json");
+            return gson.toJson(e.getMessage());
         } catch (IllegalArgumentException e) {
             res.status(400);
-            return "Erro no formato de dados: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro no formato de dados: " + e.getMessage());
         }
     };
 
@@ -138,21 +154,26 @@ public class PacienteApi {
 
             if (excluido) {
                 res.status(200);
-                return "Paciente excluído com sucesso!";
+                res.type("application/json");
+                return gson.toJson("Paciente excluído com sucesso!");
             } else {
                 res.status(400);
-                return "Erro ao excluir paciente.";
+                res.type("application/json");
+                return gson.toJson("Erro ao excluir paciente.");
             }
         } catch (ApiException e) {
             if (e.getMessage().equals("Paciente não encontrado com o ID fornecido.")) {
                 res.status(404);
-                return e.getMessage();
+                res.type("application/json");
+                return gson.toJson(e.getMessage());
             }
             res.status(400);
-            return "Erro ao excluir paciente: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao excluir paciente: " + e.getMessage());
         } catch (NumberFormatException e) {
             res.status(400);
-            return "Erro no formato do ID.";
+            res.type("application/json");
+            return gson.toJson("Erro no formato do ID.");
         }
     };
 
@@ -160,10 +181,12 @@ public class PacienteApi {
         try {
             List<Paciente> pacientes = pacienteService.consultarTodosPacientes();
             res.status(200);
+            res.type("application/json");
             return gson.toJson(pacientes);
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao listar pacientes: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao listar pacientes: " + e.getMessage());
         }
     };
 
@@ -174,17 +197,21 @@ public class PacienteApi {
 
             if (paciente == null) {
                 res.status(404);
-                return "Paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Paciente não encontrado.");
             }
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(paciente);
         } catch (NumberFormatException e) {
             res.status(400);
-            return "ID inválido. O ID deve ser um número.";
+            res.type("application/json");
+            return gson.toJson("ID inválido. O ID deve ser um número.");
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao consultar paciente: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao consultar paciente: " + e.getMessage());
         }
     };
 
