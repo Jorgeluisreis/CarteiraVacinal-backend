@@ -33,30 +33,37 @@ public class ImunizacaoApi {
 
             if (imunizacao.getIdPaciente() == null) {
                 res.status(400);
-                return "Erro: O ID do paciente é obrigatório.";
+                res.type("application/json");
+                return gson.toJson("Erro: O ID do paciente é obrigatório.");
             }
             if (imunizacao.getDataAplicacao() == null) {
                 res.status(400);
-                return "Erro: A data de aplicação é obrigatória.";
+                res.type("application/json");
+                return gson.toJson("Erro: A data de aplicação é obrigatória.");
             }
-            if (imunizacao.getIdDose() < 0) {
+            if (imunizacao.getIdDose() <= 0) {
                 res.status(400);
-                return "Erro: O ID da Dose é obrigatório.";
+                res.type("application/json");
+                return gson.toJson("Erro: O ID da Dose é obrigatório.");
             }
 
             Long codigoImunizacao = imunizacaoService.adicionarImunizacao(imunizacao);
 
             res.status(201);
-            return "Imunização inserida com sucesso! Código: " + codigoImunizacao;
+            res.type("application/json");
+            return gson.toJson("Imunização inserida com sucesso! Código: " + codigoImunizacao);
         } catch (JsonSyntaxException e) {
             res.status(400);
-            return "Erro: Formato de dados inválido. " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro: Formato de dados inválido. " + e.getMessage());
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao adicionar imunização: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao adicionar imunização: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -67,14 +74,17 @@ public class ImunizacaoApi {
 
             if (imunizacaoRequisitada == null) {
                 res.status(404);
-                return "Imunização não encontrada.";
+                res.type("application/json");
+                return gson.toJson("Erro: Imunização não encontrada.");
             }
 
             Imunizacoes imunizacao = gson.fromJson(req.body(), Imunizacoes.class);
 
             if (isImunizacaoIgual(imunizacaoRequisitada, imunizacao)) {
                 res.status(400);
-                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+                res.type("application/json");
+                return gson.toJson(
+                        "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.");
             }
 
             Imunizacoes imunizacaoAlterada = imunizacaoRequisitada;
@@ -105,21 +115,31 @@ public class ImunizacaoApi {
                 boolean atualizado = imunizacaoService.alterarImunizacao(idImunizacaoRequisitada, imunizacaoAlterada);
                 if (atualizado) {
                     res.status(200);
-                    return "Imunização atualizada com sucesso!";
+                    res.type("application/json");
+                    return gson.toJson("Imunização atualizada com sucesso!");
                 } else {
                     res.status(500);
-                    return "Erro ao atualizar imunização.";
+                    res.type("application/json");
+                    return gson.toJson("Erro ao atualizar imunização.");
                 }
             } else {
                 res.status(400);
-                return "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.";
+                res.type("application/json");
+                return gson.toJson(
+                        "Erro: Não há dados a serem alterados, os dados enviados são iguais aos existentes no banco de dados.");
             }
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao alterar imunização: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao alterar imunização: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             res.status(400);
-            return "Erro no formato de dados: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro no formato de dados: " + e.getMessage());
+        } catch (Exception e) {
+            res.status(500);
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -133,21 +153,26 @@ public class ImunizacaoApi {
 
             if (excluido) {
                 res.status(200);
-                return "Imunização excluída com sucesso!";
+                res.type("application/json");
+                return gson.toJson("Imunização excluída com sucesso!");
             } else {
                 res.status(400);
-                return "Erro ao excluir Imunização.";
+                res.type("application/json");
+                return gson.toJson("Erro ao excluir Imunização.");
             }
         } catch (ApiException e) {
             if (e.getMessage().equals("Imunização não encontrada com o ID fornecido.")) {
                 res.status(404);
-                return e.getMessage();
+                res.type("application/json");
+                return gson.toJson(e.getMessage());
             }
             res.status(400);
-            return "Erro ao excluir Imunização: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao excluir Imunização: " + e.getMessage());
         } catch (NumberFormatException e) {
             res.status(400);
-            return "Erro no formato do ID.";
+            res.type("application/json");
+            return gson.toJson("Erro no formato do ID.");
         }
     };
 
@@ -161,21 +186,26 @@ public class ImunizacaoApi {
 
             if (excluido) {
                 res.status(200);
-                return "Todas as imunizações do paciente foram excluída com sucesso!";
+                res.type("application/json");
+                return gson.toJson("Todas as imunizações do paciente foram excluídas com sucesso!");
             } else {
                 res.status(400);
-                return "Erro ao excluir as Imunizações.";
+                res.type("application/json");
+                return gson.toJson("Erro ao excluir as Imunizações.");
             }
         } catch (ApiException e) {
             if (e.getMessage().equals("Imunização não encontrada com o ID fornecido.")) {
                 res.status(404);
-                return e.getMessage();
+                res.type("application/json");
+                return gson.toJson(e.getMessage());
             }
             res.status(400);
-            return "Erro ao excluir as Imunizações: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao excluir as Imunizações: " + e.getMessage());
         } catch (NumberFormatException e) {
             res.status(400);
-            return "Erro no formato do ID.";
+            res.type("application/json");
+            return gson.toJson("Erro no formato do ID.");
         }
     };
 
@@ -183,10 +213,12 @@ public class ImunizacaoApi {
         try {
             List<Imunizacoes> imunizacoes = imunizacaoService.consultarTodasImunizacoes();
             res.status(200);
+            res.type("application/json");
             return gson.toJson(imunizacoes);
         } catch (ApiException e) {
             res.status(400);
-            return "Erro ao listar as imunizações: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao listar as imunizações: " + e.getMessage());
         }
     };
 
@@ -195,19 +227,23 @@ public class ImunizacaoApi {
             Long idImunizacao = Long.parseLong(req.params(":id"));
             List<Imunizacoes> imunizacao = imunizacaoService.consultarImunizacaoPorIdImunizacao(idImunizacao);
 
-            if (imunizacao == null) {
+            if (imunizacao.isEmpty()) {
                 res.status(404);
-                return "Imunização não encontrada.";
+                res.type("application/json");
+                return gson.toJson("Erro: Imunização não encontrada.");
             }
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(imunizacao);
         } catch (NumberFormatException e) {
             res.status(400);
-            return "ID inválido. O ID deve ser um número.";
+            res.type("application/json");
+            return gson.toJson("ID inválido. O ID deve ser um número.");
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao consultar a imunização: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao consultar a imunização: " + e.getMessage());
         }
     };
 
@@ -221,17 +257,21 @@ public class ImunizacaoApi {
 
             if (imunizacao == null) {
                 res.status(404);
-                return "Imunização por paciente não encontrada.";
+                res.type("application/json");
+                return gson.toJson("Imunização por paciente não encontrada.");
             }
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(imunizacao);
         } catch (NumberFormatException e) {
             res.status(400);
-            return "ID inválido. O ID deve ser um número.";
+            res.type("application/json");
+            return gson.toJson("ID inválido. O ID deve ser um número.");
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao consultar a imunização por paciente: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao consultar a imunização por paciente: " + e.getMessage());
         }
     };
 
@@ -253,17 +293,21 @@ public class ImunizacaoApi {
 
             if (imunizacao == null) {
                 res.status(404);
-                return "Período de Imunização por paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Período de Imunização por paciente não encontrado.");
             }
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(imunizacao);
         } catch (NumberFormatException e) {
             res.status(400);
-            return "ID inválido. O ID deve ser um número.";
+            res.type("application/json");
+            return gson.toJson("ID inválido. O ID deve ser um número.");
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao consultar o período de imunização por paciente: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao consultar o período de imunização por paciente: " + e.getMessage());
         }
     };
 

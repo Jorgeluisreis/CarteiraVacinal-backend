@@ -37,7 +37,8 @@ public class EstatisticaApi {
 
             if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
                 res.status(400);
-                return "Erro: O ID do paciente deve ser um número inteiro.";
+                res.type("application/json");
+                return gson.toJson("O ID do paciente deve ser um número inteiro.");
             }
 
             Long idPaciente = Long.parseLong(idPacienteParam);
@@ -47,13 +48,16 @@ public class EstatisticaApi {
             int quantidade = estatisticaService.contarVacinasAplicadasPorPaciente(idPaciente);
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(Map.of("quantidade", quantidade));
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao buscar a quantidade de vacinas aplicadas: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao buscar a quantidade de vacinas aplicadas: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -63,7 +67,8 @@ public class EstatisticaApi {
 
             if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
                 res.status(400);
-                return "Erro: O ID do paciente deve ser um número inteiro.";
+                res.type("application/json");
+                return gson.toJson("O ID do paciente deve ser um número inteiro.");
             }
 
             Long idPaciente = Long.parseLong(idPacienteParam);
@@ -71,19 +76,23 @@ public class EstatisticaApi {
 
             if (paciente == null) {
                 res.status(404);
-                return "Erro: Paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Paciente não encontrado.");
             }
 
             int quantidade = estatisticaService.qtdeVacinasProximasPorPaciente(paciente);
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(Map.of("quantidade", quantidade));
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao buscar a quantidade de vacinas para o próximo mês: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao buscar a quantidade de vacinas para o próximo mês: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -93,7 +102,8 @@ public class EstatisticaApi {
 
             if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
                 res.status(400);
-                return "Erro: O ID do paciente deve ser um número inteiro.";
+                res.type("application/json");
+                return gson.toJson("O ID do paciente deve ser um número inteiro.");
             }
 
             Long idPaciente = Long.parseLong(idPacienteParam);
@@ -101,19 +111,23 @@ public class EstatisticaApi {
 
             if (paciente == null) {
                 res.status(404);
-                return "Erro: Paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Paciente não encontrado.");
             }
 
             int quantidade = estatisticaService.qtdeVacinasAtrasadasPorPaciente(paciente);
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(Map.of("quantidade", quantidade));
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao buscar a quantidade de vacinas atrasadas: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao buscar a quantidade de vacinas atrasadas: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -123,20 +137,24 @@ public class EstatisticaApi {
 
             if (mesesParam == null || !mesesParam.matches("\\d+")) {
                 res.status(400);
-                return "Erro: A idade em meses deve ser um número inteiro.";
+                res.type("application/json");
+                return gson.toJson("A idade em meses deve ser um número inteiro.");
             }
 
             int idadeMeses = Integer.parseInt(mesesParam);
             int quantidade = estatisticaService.qtdeVacinasAcimaDeIdade(idadeMeses);
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(Map.of("quantidade", quantidade));
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao buscar a quantidade de vacinas acima da idade informada: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao buscar a quantidade de vacinas acima da idade informada: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 
@@ -146,7 +164,8 @@ public class EstatisticaApi {
 
             if (idPacienteParam == null || !idPacienteParam.matches("\\d+")) {
                 res.status(400);
-                return "Erro: O ID do paciente deve ser um número inteiro.";
+                res.type("application/json");
+                return gson.toJson("O ID do paciente deve ser um número inteiro.");
             }
 
             Long idPaciente = Long.parseLong(idPacienteParam);
@@ -154,19 +173,23 @@ public class EstatisticaApi {
 
             if (paciente == null) {
                 res.status(404);
-                return "Erro: Paciente não encontrado.";
+                res.type("application/json");
+                return gson.toJson("Paciente não encontrado.");
             }
 
             int quantidade = estatisticaService.qtdeVacinasNaoAplicaveis(paciente);
 
             res.status(200);
+            res.type("application/json");
             return gson.toJson(Map.of("quantidade", quantidade));
         } catch (ApiException e) {
             res.status(500);
-            return "Erro ao buscar a quantidade de vacinas não aplicáveis: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro ao buscar a quantidade de vacinas não aplicáveis: " + e.getMessage());
         } catch (Exception e) {
             res.status(500);
-            return "Erro inesperado: " + e.getMessage();
+            res.type("application/json");
+            return gson.toJson("Erro inesperado: " + e.getMessage());
         }
     };
 }
