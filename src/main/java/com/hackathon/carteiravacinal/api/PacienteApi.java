@@ -164,12 +164,13 @@ public class PacienteApi {
         } catch (ApiException e) {
             if (e.getMessage().equals("Paciente não encontrado com o ID fornecido.")) {
                 res.status(404);
-                res.type("application/json");
-                return gson.toJson(e.getMessage());
+            } else if (e.getMessage().contains("imunizações cadastradas")) {
+                res.status(409); // Código HTTP 409 (Conflict) para esse caso específico
+            } else {
+                res.status(400);
             }
-            res.status(400);
             res.type("application/json");
-            return gson.toJson("Erro ao excluir paciente: " + e.getMessage());
+            return gson.toJson(e.getMessage());
         } catch (NumberFormatException e) {
             res.status(400);
             res.type("application/json");

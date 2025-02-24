@@ -50,8 +50,10 @@ public class PacienteService {
                 throw new ApiException("Paciente não encontrado com o ID fornecido.");
             }
             return pacienteRepository.excluirPaciente(idPaciente);
+        } catch (ApiException e) {
+            throw e;
         } catch (Exception e) {
-            throw new ApiException("Falha ao excluir o paciente.");
+            throw new ApiException("Erro inesperado ao excluir o paciente.");
         }
     }
 

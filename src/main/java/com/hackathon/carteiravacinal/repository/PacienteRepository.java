@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,16 +83,19 @@ public class PacienteRepository {
         }
     }
 
-    public boolean excluirPaciente(Long idPaciente) throws SQLException, ApiException {
+    public boolean excluirPaciente(Long idPaciente) throws ApiException {
         String query = "DELETE FROM paciente WHERE id = ?";
         try (Connection conn = DatabaseConfig.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setLong(1, idPaciente);
-
             int affectedRows = stmt.executeUpdate();
 
             return affectedRows > 0;
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ApiException("Não é possível excluir o paciente pois há imunizações cadastradas para ele.");
+        } catch (SQLException e) {
+            throw new ApiException("Erro ao excluir o paciente.");
         }
     }
 
