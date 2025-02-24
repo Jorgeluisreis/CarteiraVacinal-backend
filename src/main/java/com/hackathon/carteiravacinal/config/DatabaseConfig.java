@@ -1,9 +1,10 @@
 package com.hackathon.carteiravacinal.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
@@ -19,18 +20,19 @@ public class DatabaseConfig {
     private static final String DATABASE = getEnv("DB_NAME", "vacinacao");
     private static final String USER = getEnv("DB_USER", "root");
     private static final String PASSWORD = getEnv("DB_PASSWORD", "carteira");
-    private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE +
-            "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+
+    private static HikariDataSource dataSource;
 
     static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Erro ao carregar o driver JDBC", e);
-        }
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE
+                + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
+        config.setUsername(USER);
+        config.setPassword(PASSWORD);
+        dataSource = new HikariDataSource(config);
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return dataSource.getConnection();
     }
 }
