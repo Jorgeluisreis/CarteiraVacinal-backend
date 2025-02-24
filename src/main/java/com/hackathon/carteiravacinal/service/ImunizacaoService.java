@@ -21,19 +21,6 @@ public class ImunizacaoService {
         this.pacienteRepository = pacienteRepository;
     }
 
-    public Long adicionarImunizacao(Imunizacoes imunizacao) throws ApiException {
-        Paciente paciente = pacienteRepository.buscarPacientePorId(imunizacao.getIdPaciente());
-        if (paciente == null) {
-            throw new ApiException("Paciente com ID " + imunizacao.getIdPaciente() + " não encontrado.");
-        }
-
-        try {
-            return imunizacaoRepository.adicionarImunizacao(imunizacao);
-        } catch (SQLException e) {
-            throw new ApiException("Erro ao inserir imunização no banco de dados: " + e.getMessage(), e);
-        }
-    }
-
     public Imunizacoes buscarImunizacaoPorId(Long id) throws ApiException {
         Imunizacoes imunizacao = imunizacaoRepository.buscarImunizacaoPorId(id);
         if (imunizacao == null) {
@@ -68,6 +55,28 @@ public class ImunizacaoService {
             return imunizacaoRepository.excluirTodasImunizacoesPaciente(idPaciente);
         } catch (Exception e) {
             throw new ApiException("Falha ao excluir a Imunização.");
+        }
+    }
+
+    public Long adicionarImunizacao(Imunizacoes imunizacao) throws ApiException, SQLException {
+
+        Paciente paciente = pacienteRepository.buscarPacientePorId(imunizacao.getIdPaciente());
+        if (paciente == null) {
+            throw new ApiException("Paciente com ID " + imunizacao.getIdPaciente() + " não encontrado.");
+        }
+
+        boolean existe = imunizacaoRepository.verificarImunizacaoExistente(paciente.getId(), imunizacao.getIdDose());
+        if (existe) {
+            throw new ApiException("Este paciente já possui esta imunização cadastrada.");
+        }
+
+        try {
+            return imunizacaoRepository.adicionarImunizacao(imunizacao);
+        } catch (SQLException e) {
+            if (e.getSQLState().startsWith("23")) {
+                throw new ApiException("Este paciente já possui esta imunização cadastrada.");
+            }
+            throw new ApiException("Erro ao inserir imunização no banco de dados: " + e.getMessage());
         }
     }
 

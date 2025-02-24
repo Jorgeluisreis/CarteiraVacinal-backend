@@ -42,6 +42,24 @@ public class ImunizacaoRepository {
         }
     }
 
+    public boolean verificarImunizacaoExistente(Long idPaciente, int idDose) throws SQLException {
+        String query = "SELECT COUNT(*) FROM imunizacoes WHERE id_paciente = ? AND id_dose = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, idPaciente);
+            stmt.setLong(2, idDose);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
     public Imunizacoes buscarImunizacaoPorId(Long id) throws ApiException {
         String query = "SELECT * FROM imunizacoes WHERE id = ?";
         try (Connection conn = DatabaseConfig.getConnection();

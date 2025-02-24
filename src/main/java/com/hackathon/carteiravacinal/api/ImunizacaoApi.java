@@ -44,7 +44,7 @@ public class ImunizacaoApi {
             if (imunizacao.getIdDose() <= 0) {
                 res.status(400);
                 res.type("application/json");
-                return gson.toJson("Erro: O ID da Dose é obrigatório.");
+                return gson.toJson("Erro: O ID da dose é obrigatório e deve ser maior que zero.");
             }
 
             Long codigoImunizacao = imunizacaoService.adicionarImunizacao(imunizacao);
@@ -52,14 +52,20 @@ public class ImunizacaoApi {
             res.status(201);
             res.type("application/json");
             return gson.toJson("Imunização inserida com sucesso! Código: " + codigoImunizacao);
+        } catch (ApiException e) {
+            if (e.getMessage().equals("Paciente não encontrado com o ID fornecido.")) {
+                res.status(404);
+            } else if (e.getMessage().contains("já possui esta imunização cadastrada")) {
+                res.status(409);
+            } else {
+                res.status(400);
+            }
+            res.type("application/json");
+            return gson.toJson(e.getMessage());
         } catch (JsonSyntaxException e) {
             res.status(400);
             res.type("application/json");
-            return gson.toJson("Erro: Formato de dados inválido. " + e.getMessage());
-        } catch (ApiException e) {
-            res.status(400);
-            res.type("application/json");
-            return gson.toJson("Erro ao adicionar imunização: " + e.getMessage());
+            return gson.toJson("Erro: Formato de dados inválido.");
         } catch (Exception e) {
             res.status(500);
             res.type("application/json");
