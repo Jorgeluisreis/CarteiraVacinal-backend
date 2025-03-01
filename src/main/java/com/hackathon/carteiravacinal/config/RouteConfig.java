@@ -42,7 +42,7 @@ public class RouteConfig {
                 Spark.get("/estatisticas/imunizacoes_atrasadas/paciente/:id",
                                 estatisticaApi.qtdeVacinasAtrasadasPorPaciente);
                 Spark.get("/estatisticas/imunizacoes/idade_maior/:meses", estatisticaApi.qtdeVacinasAcimaDeIdade);
-                Spark.get("/estatisticas/vacinas/nao_aplivacaveis/paciente/:id",
+                Spark.get("/estatisticas/vacinas/nao_aplicaveis/paciente/:id",
                                 estatisticaApi.qtdeVacinasNaoAplicaveis);
         }
 }
