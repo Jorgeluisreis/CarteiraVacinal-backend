@@ -1,8 +1,8 @@
 name: Publish Docker image
 
 on:
-  push:
-    branches: ["development"]
+  release:
+    types: [published]
 
 jobs:
   build-and-push-image:
@@ -26,6 +26,10 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v2
