@@ -1,0 +1,1039 @@
+{
+	"info": {
+		"_postman_id": "c869fb06-a870-4f2c-b1c9-49bfedd95df4",
+		"name": "CarteiraVacinal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32261406"
+	},
+	"item": [
+		{
+			"name": "Paciente",
+			"item": [
+				{
+					"name": "Local",
+					"item": [
+						{
+							"name": "Criar um Paciente - Local",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nome\": \"Halks Reis\",\r\n    \"cpf\": \"00000000001\",\r\n    \"sexo\": \"M\",\r\n    \"dataNascimento\": \"21-02-2025\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3300/paciente/inserir",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"paciente",
+										"inserir"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar um Paciente - Local",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Nilson\",\r\n  \"cpf\": \"12345678913\",\r\n  \"sexo\": \"M\",\r\n  \"dataNascimento\": \"31-12-1980\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3300/paciente/alterar/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"paciente",
+										"alterar",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir um Paciente - Local",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/paciente/excluir/11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"paciente",
+										"excluir",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos os Pacientes - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/paciente/consultar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"paciente",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar um Paciente por Id - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/paciente/consultar/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"paciente",
+										"consultar",
+										"8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Web",
+					"item": [
+						{
+							"name": "Criar um Paciente - Web",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"João Silva\",\r\n  \"cpf\": \"12345678909\",\r\n  \"sexo\": \"M\",\r\n  \"dataNascimento\": \"30-01-2025\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/paciente/inserir",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"paciente",
+										"inserir"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar um Paciente - Web",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nome\": \"Nilson\",\r\n  \"cpf\": \"12345678913\",\r\n  \"sexo\": \"M\",\r\n  \"dataNascimento\": \"31-12-1980\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apicarteiravacinal.jorgedev.net/paciente/alterar/7",
+									"protocol": "https",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"paciente",
+										"alterar",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir um Paciente - Web",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/paciente/excluir/40",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"paciente",
+										"excluir",
+										"40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todos os Pacientes - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/paciente/consultar",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"paciente",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar um Paciente por Id - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/paciente/consultar/10",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"paciente",
+										"consultar",
+										"10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Imunização",
+			"item": [
+				{
+					"name": "Local",
+					"item": [
+						{
+							"name": "Criar uma Imunização - Local",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPaciente\": 8,\r\n  \"idDose\":90,\r\n  \"dataAplicacao\": \"10-01-2025\",\r\n  \"fabricante\": \"Laboratório ABC\",\r\n  \"lote\": \"ABC1234\",\r\n  \"localAplicacao\": \"Hospital Paxibal\",\r\n  \"profissionalAplicador\": \"Dr. João Seboso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3300/imunizacao/inserir",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"imunizacao",
+										"inserir"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar uma Imunização - Local",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPaciente\": 10,\r\n  \"idDose\":88,\r\n  \"dataAplicacao\": \"02-01-2025\",\r\n  \"fabricante\": \"Laboratório XYZ\",\r\n  \"lote\": \"ABC1234\",\r\n  \"localAplicacao\": \"Hospital Santa Marta\",\r\n  \"profissionalAplicador\": \"Dr. João Silva\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3300/imunizacao/alterar/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"imunizacao",
+										"alterar",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir uma Imunização por Id - Local",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/imunizacao/excluir/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"imunizacao",
+										"excluir",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir Todas as Imunizações por Paciente - Local",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/imunizacao/excluir/paciente/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"imunizacao",
+										"excluir",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Imunizações - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/imunizacao/consultar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"imunizacao",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunização por Id Imunização - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/imunizacao/consultar/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"imunizacao",
+										"consultar",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunizações por Id Paciente - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/imunizacao/consultar/paciente/8",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"imunizacao",
+										"consultar",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunização por paciente e por período de aplicação - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/imunizacao/consultar/paciente/1/aplicacao/01-01-2025/25-01-2025",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"imunizacao",
+										"consultar",
+										"paciente",
+										"1",
+										"aplicacao",
+										"01-01-2025",
+										"25-01-2025"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Web",
+					"item": [
+						{
+							"name": "Criar uma Imunização - Web",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPaciente\": 8,\r\n  \"idDose\":90,\r\n  \"dataAplicacao\": \"10-01-2025\",\r\n  \"fabricante\": \"Laboratório ABC\",\r\n  \"lote\": \"ABC1234\",\r\n  \"localAplicacao\": \"Hospital Paxibal\",\r\n  \"profissionalAplicador\": \"Dr. João Seboso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/inserir",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"inserir"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar uma Imunização - Web",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPaciente\": 10,\r\n  \"idDose\":88,\r\n  \"dataAplicacao\": \"02-01-2025\",\r\n  \"fabricante\": \"Laboratório XYZ\",\r\n  \"lote\": \"ABC1234\",\r\n  \"localAplicacao\": \"Hospital Santa Marta\",\r\n  \"profissionalAplicador\": \"Dr. João Silva\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/alterar/6",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"alterar",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir uma Imunização por Id - Web",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/excluir/6",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"excluir",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Excluir Todas as Imunizações por Paciente - Web",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/excluir/paciente/8",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"excluir",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Imunizações - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/consultar",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunização por Id Imunização - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/consultar/8",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"consultar",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunizações por Id Paciente - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/consultar/paciente/8",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"consultar",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultar Imunização por paciente e por período de aplicação - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/imunizacao/consultar/paciente/1/aplicacao/01-01-2025/25-01-2025",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"imunizacao",
+										"consultar",
+										"paciente",
+										"1",
+										"aplicacao",
+										"01-01-2025",
+										"25-01-2025"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Vacina",
+			"item": [
+				{
+					"name": "Local",
+					"item": [
+						{
+							"name": "Listar todas as Vacinas - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/vacinas/consultar",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"vacinas",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas para uma faixa etária - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/vacinas/consultar/faixa_etaria/CR",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"vacinas",
+										"consultar",
+										"faixa_etaria",
+										"CR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas recomendadas acima de uma idade - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/vacinas/consultar/idade_maior/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"vacinas",
+										"consultar",
+										"idade_maior",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas não aplicáveis ao Paciente - Local",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3300/vacinas/consultar/nao_aplivacaveis/paciente/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3300",
+									"path": [
+										"vacinas",
+										"consultar",
+										"nao_aplivacaveis",
+										"paciente",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Web",
+					"item": [
+						{
+							"name": "Listar todas as Vacinas - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/vacinas/consultar",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"vacinas",
+										"consultar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas para uma faixa etária - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/vacinas/consultar/faixa_etaria/CR",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"vacinas",
+										"consultar",
+										"faixa_etaria",
+										"CR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas recomendadas acima de uma idade - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/vacinas/consultar/idade_maior/12",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"vacinas",
+										"consultar",
+										"idade_maior",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar todas as Vacinas não aplicáveis ao Paciente - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/vacinas/consultar/nao_aplivacaveis/paciente/",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"vacinas",
+										"consultar",
+										"nao_aplivacaveis",
+										"paciente",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Estatísticas",
+			"item": [
+				{
+					"name": "Local",
+					"item": [
+						{
+							"name": "Qtde de Vacinas aplicadas por Paciente - Local",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas aplicáveis no próximo mês por paciente - Local",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas atrasadas - Local",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas acima de uma idade em meses - Local",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas não aplicáveis - Local",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Web",
+					"item": [
+						{
+							"name": "Qtde de Vacinas aplicadas por Paciente - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/estatisticas/imunizacoes/paciente/10",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"estatisticas",
+										"imunizacoes",
+										"paciente",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas aplicáveis no próximo mês por paciente - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/estatisticas/proximas_imunizacoes/paciente/8",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"estatisticas",
+										"proximas_imunizacoes",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas atrasadas - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/estatisticas/imunizacoes_atrasadas/paciente/10",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"estatisticas",
+										"imunizacoes_atrasadas",
+										"paciente",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas acima de uma idade em meses - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/estatisticas/imunizacoes/idade_maior/100",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"estatisticas",
+										"imunizacoes",
+										"idade_maior",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Qtde de Vacinas não aplicáveis - Web",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://apicarteiravacinal.jorgedev.net/estatisticas/vacinas/nao_aplivacaveis/paciente/8",
+									"protocol": "http",
+									"host": [
+										"apicarteiravacinal",
+										"jorgedev",
+										"net"
+									],
+									"path": [
+										"estatisticas",
+										"vacinas",
+										"nao_aplivacaveis",
+										"paciente",
+										"8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
