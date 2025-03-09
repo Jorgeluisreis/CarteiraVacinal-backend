@@ -39,6 +39,15 @@ Esta WebAPI permite que seja feitas requisições HTTP, contendo interações de
 
 ---
 
+## 🏛️ Arquitetura da Aplicação
+
+<p align="center">
+
+<img src="https://i.imgur.com/YFdIiKN.png" alt="Arquitetura">
+
+</p>
+
+
 ## 🛠️ Tecnologias Utilizadas  
 
 - ![Java](https://img.shields.io/badge/Java-21-red) - Linguagem de programação utilizada.  
