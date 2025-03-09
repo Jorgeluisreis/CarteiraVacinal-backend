@@ -43,7 +43,7 @@ Esta WebAPI permite que seja feitas requisições HTTP, contendo interações de
 
 <p align="center">
 
-<img src="https://i.imgur.com/YFdIiKN.png" alt="Arquitetura">
+<img src="https://i.imgur.com/LRjJOzC.png" alt="Arquitetura">
 
 </p>
 
