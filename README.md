@@ -47,6 +47,25 @@ Esta WebAPI permite que seja feitas requisições HTTP, contendo interações de
 
 </p>
 
+## 🖧 Fluxo da Tríade (Backend, Frontend e Banco de Dados)
+
+No backend, usei o **HikariCP** para gerenciar as conexões do Banco de dados.
+
+O **HikariCP** é um pool de conexões JDBC para bancos de dados, projetado para ser extremamente rápido, leve e eficiente. Ele é amplamente utilizado em aplicações Java que precisam gerenciar conexões com bancos de dados de forma otimizada.
+
+**Principais Características do HikariCP**
+* Alto desempenho – Considerado um dos pools de conexão mais rápidos disponíveis.
+* Baixo consumo de memória – Usa menos threads e menos recursos que outros pools, como C3P0 ou Apache DBCP.
+* Recuperação automática – Se uma conexão falha, o HikariCP pode restaurá-la automaticamente.
+* Configuração simplificada – Possui poucas configurações, mas altamente otimizadas por padrão.
+* Suporte a timeout e validação de conexões – Evita conexões zumbi ou mal configuradas.
+
+<p align="center">
+
+<img src="https://i.imgur.com/5zhXdMR.png" alt="Fluxo da Tríade">
+
+</p>
+
 
 ## 🛠️ Tecnologias Utilizadas  
 
